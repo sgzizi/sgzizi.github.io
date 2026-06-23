@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>当多智能体系统成为政府文本的「陪审团」 · 王子峻</title>
+<meta name="description" content="MARS-Gov 如何用「第十陪审员」机制，去发现那些预定义类别之外、被忽视的受影响群体 —— 一个面向政府文本官僚偏见检测的多智能体治理框架。" />
+<link rel="canonical" href="https://wangzijun.top/posts/mars-gov.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="当多智能体系统成为政府文本的「陪审团」" />
+<meta property="og:description" content="MARS-Gov：开放集立场筛查与多智能体治理框架。" />
+<meta name="theme-color" content="#eef4ff" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230a84ff'/%3E%3Cstop offset='0.5' stop-color='%235e5ce6'/%3E%3Cstop offset='1' stop-color='%23bf5af2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ctext x='50' y='69' font-size='58' font-family='-apple-system,Helvetica,Arial' font-weight='700' fill='white' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="nav-brand" href="../index.html"><span class="dot"></span> 王子峻</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#about">关于</a></li>
+      <li><a href="../index.html#research">研究</a></li>
+      <li><a href="../articles.html">文章</a></li>
+      <li><a href="../index.html#friends">友链</a></li>
+      <li><a class="nav-cta" href="../index.html#contact">联系我</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="post-hero post-hero--c1">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">首页</a> · <a href="../articles.html">文章</a> · 多智能体</div>
+    <div class="post-meta-row">
+      <span class="tag blue">EMNLP 2026 · 在投</span>
+      <span class="tag">多智能体</span>
+      <span class="tag">NLP</span>
+      <span class="tag">AI 治理</span>
+    </div>
+    <h1>当多智能体系统成为政府文本的「陪审团」</h1>
+    <p class="dek">在 12 个人的陪审团之外，谁来替那些「没被定义」的群体说话？这是 MARS-Gov 想回答的问题。</p>
+    <div class="post-byline">
+      <span class="av"><img src="../assets/img/portrait.jpg" alt="王子峻" /></span>
+      <span><b>王子峻</b> · 2025 · 阅读约 8 分钟</span>
+    </div>
+  </div>
+</header>
+
+<article class="article">
+  <div class="wrap">
+    <div class="prose">
+      <p class="lead-para">政府发布的每一份文件 —— 一项福利政策、一条办事流程、一段公告措辞 —— 都在无声地决定着「谁被看见，谁被遗漏」。官僚语言里的偏见往往不是恶意的，而是结构性的：它藏在默认假设里，藏在「正常人都应该……」的措辞里。问题是，这种偏见太隐蔽，连写下它的人都未必察觉。</p>
+
+      <p>我做 <strong>MARS-Gov</strong> 的出发点很简单：能不能让一组大语言模型扮演的智能体，像一个严谨的陪审团那样，去审视政府文本，找出其中潜在的官僚偏见？更关键的是 —— 当偏见落在我们预先定义的类别之外时，系统还能不能发现它？</p>
+
+      <h2>为什么单个模型不够</h2>
+      <p>最直接的做法，是给一个大模型一段政府文本，问它「这里有没有偏见」。但这很快就会暴露三个问题：</p>
+      <ul>
+        <li><strong>立场单一。</strong>一个模型只有一种「视角」，它会系统性地忽略自己训练分布之外的群体。</li>
+        <li><strong>缺乏依据。</strong>没有外部法律与规范作为锚点，模型的判断容易变成主观臆测。</li>
+        <li><strong>不可审计。</strong>一句「我觉得有偏见」无法被追责，也无法被复核。</li>
+      </ul>
+      <p>真实世界里，我们怎么处理「需要谨慎、需要多元视角、需要可追责」的判断？答案是 —— 陪审团。于是我把整个系统设计成一个<strong>多智能体治理工作流</strong>。</p>
+
+      <h2>把判断拆成一条闭环流水线</h2>
+      <p>MARS-Gov 不是一个模型，而是一组各司其职的智能体，串成一条从证据到裁决的闭环：</p>
+      <ol>
+        <li><strong>规范性证据语境化（Normative Evidence Contextualization）</strong> —— 先把判断的「法律地基」打好。这个模块深度整合了荷兰反歧视法、政府可及性指南、包容性语言资源以及 DGDB 偏见类别说明，为下游所有智能体提供统一的规范依据。</li>
+        <li><strong>法律政策证据检索</strong> —— 针对具体文本，检索相关的法条与政策上下文（RAG）。</li>
+        <li><strong>开放集目标筛查（Open-Set Screening）</strong> —— 识别这段文本可能影响到哪些群体，包括预定义九类之外的新群体。</li>
+        <li><strong>双重陪审员裁决</strong> —— 由固定陪审员与动态「第十陪审员」共同投票。</li>
+        <li><strong>风险路由门控</strong> —— 根据风险等级决定是否需要进一步复核。</li>
+        <li><strong>裁决改写验证</strong> —— 把最终结论改写、回灌、验证一致性，形成可解释的输出。</li>
+      </ol>
+
+      <div class="callout">
+        <span class="ci">⚖️</span>
+        <p><b>核心直觉：</b>把「检测偏见」这件事，从一次性的分类，变成一个有证据、有辩论、有复核的<b>治理过程</b>。</p>
+      </div>
+
+      <h2>「第十陪审员」：替没被定义的人说话</h2>
+      <p>这是我个人最喜欢的一块设计。传统的偏见检测系统都依赖一份<strong>封闭的类别清单</strong> —— 比如性别、种族、年龄等九类。但现实里，偏见最伤人的地方，恰恰是那些<strong>没被写进清单</strong>的群体：某种罕见病患者、某类临时工、某个数字鸿沟另一端的人。</p>
+      <p>开放集立场筛查（Open-Set Standpoint Screening）就是为此而生。当系统检测到某段文本可能影响到「九类之外」的新型受影响群体时，它会<strong>动态生成一位「第十陪审员」</strong> —— 一个专门代表这个新群体立场的智能体，加入到裁决中，完成补充审计。</p>
+      <blockquote>
+        <p>固定陪审员保证了判断的稳定与一致；动态的「第十陪审员」则保证了判断的<strong>开放与公平</strong>。前者守住下限，后者拓宽边界。</p>
+      </blockquote>
+      <p>这个名字当然是在向《十二怒汉》致敬 —— 那位坚持唱反调、逼着所有人重新审视证据的陪审员。在多智能体系统里，<strong>一个会唱反调的角色，常常比再叠十个 prompt 更有价值</strong>。多样性不是噪声，它本身就是信息。</p>
+
+      <h2>让结论可解释、可审计</h2>
+      <p>治理类系统如果不能被追责，就没有意义。所以 MARS-Gov 的最后一环是<strong>裁决改写验证</strong>：系统会把最终裁决重新表述一遍，再回到证据上核对一致性。这样输出的不只是一个「有/无偏见」的标签，而是一条<strong>从法律依据 → 受影响群体 → 陪审员意见 → 最终结论</strong>的完整证据链。</p>
+
+      <h2>我从中学到的</h2>
+      <p>做完 MARS-Gov，我最大的体会不在技术，而在<strong>视角</strong>：很多 AI 系统的「公平」失效，不是因为算法不够强，而是因为它的世界观从一开始就是封闭的 —— 它只会在自己认识的类别里找答案。给系统留一道「认识陌生人」的口子，可能比优化任何一个指标都重要。</p>
+
+      <div class="callout">
+        <span class="ci">📄</span>
+        <p>这篇文章对应论文《The "10th Juror": Open-Set Standpoint Screening for Bureaucratic Bias Detection》，已投稿 <b>EMNLP 2026</b>。如果你对多智能体治理或 AI 公平性感兴趣，<a href="../index.html#contact">欢迎找我聊聊</a>。</p>
+      </div>
+
+      <div class="post-foot">
+        <a class="back" href="../articles.html"><span class="arrow">←</span> 返回文章列表</a>
+        <span class="share">王子峻 · wangzijun.top</span>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script src="../main.js"></script>
+</body>
+</html>
