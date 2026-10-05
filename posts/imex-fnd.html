@@ -1,121 +1,33 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>用混合专家拆解多模态虚假新闻 · 王子峻</title>
-<meta name="description" content="当文本与图像各执一词，IMEX-FND 如何用文本唯一性、图像唯一性、融合唯一性、协同与冗余五类专家，把跨模态交互看得清清楚楚。" />
-<link rel="canonical" href="https://wangzijun.top/posts/imex-fnd.html" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="用混合专家拆解多模态虚假新闻" />
-<meta property="og:description" content="IMEX-FND：交互感知的混合专家框架。" />
-<meta name="theme-color" content="#f1eeff" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230a84ff'/%3E%3Cstop offset='0.5' stop-color='%235e5ce6'/%3E%3Cstop offset='1' stop-color='%23bf5af2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ctext x='50' y='69' font-size='58' font-family='-apple-system,Helvetica,Arial' font-weight='700' fill='white' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E" />
-<link rel="stylesheet" href="../styles.css" />
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Decomposing Multimodal Fake News with Mixture of Experts · Wang Zijun</title>
+<meta name="description" content="A research note on IMEX-FND, an interaction-aware mixture-of-experts framework for multimodal fake-news detection." />
+<link rel="canonical" href="https://wangzijun.top/posts/imex-fnd.html" /><meta property="og:type" content="article" />
+<meta property="og:title" content="Decomposing Multimodal Fake News with Mixture of Experts" /><meta property="og:description" content="IMEX-FND: an interaction-aware mixture-of-experts framework." />
+<meta name="theme-color" content="#f1eeff" /><link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-
-<nav class="nav" id="nav">
-  <div class="wrap">
-    <a class="nav-brand" href="../index.html"><span class="dot"></span> 王子峻</a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="../index.html#about">关于</a></li>
-      <li><a href="../index.html#research">研究</a></li>
-      <li><a href="../articles.html">文章</a></li>
-      <li><a href="../index.html#friends">友链</a></li>
-      <li><a class="nav-cta" href="../index.html#contact">联系我</a></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
-  </div>
-</nav>
-
-<header class="post-hero post-hero--c2">
-  <div class="wrap">
-    <div class="crumbs"><a href="../index.html">首页</a> · <a href="../articles.html">文章</a> · 多模态</div>
-    <div class="post-meta-row">
-      <span class="tag purple">WISE 2026 · 在投</span>
-      <span class="tag">多模态</span>
-      <span class="tag">混合专家</span>
-      <span class="tag">深度学习</span>
-    </div>
-    <h1>用混合专家拆解多模态虚假新闻</h1>
-    <p class="dek">当一条新闻的文字和配图「各执一词」，真相往往就藏在它们的关系里。问题是 —— 这种关系，模型看得见吗？</p>
-    <div class="post-byline">
-      <span class="av"><img src="../assets/img/portrait.jpg" alt="王子峻" /></span>
-      <span><b>王子峻</b> · 2025 · 阅读约 9 分钟</span>
-    </div>
-  </div>
-</header>
-
-<article class="article">
-  <div class="wrap">
-    <div class="prose">
-      <p class="lead-para">一张真实的灾难照片，配上一段移花接木的文字，就能制造出一条极具迷惑性的假新闻。多模态虚假新闻的狡猾之处在于：单看图是真的，单看文也通顺，<strong>问题出在两者的「交互」上</strong>。而大多数检测模型，恰恰把图文一股脑拼在一起，丢掉了这层最关键的信息。</p>
-
-      <p><strong>IMEX-FND</strong>（Interaction-aware Mixture-of-Experts for Fake News Detection）想做的，就是把这层「交互」显式地拆开、看清、并解释出来。</p>
-
-      <h2>问题：融合，但融得太粗糙</h2>
-      <p>主流多模态融合方法常常做一件事：把文本特征和图像特征拼接（或注意力交互）后,扔进一个分类器。这有两个隐患：</p>
-      <ul>
-        <li><strong>交互被「平均」掉了。</strong>有的假新闻靠图文矛盾露馅，有的靠纯文本造谣，有的靠图片本身被篡改 —— 它们需要的判据完全不同，但一个统一的融合层会把这些差异抹平。</li>
-        <li><strong>决策不可解释。</strong>模型说「这是假的」，但说不清是因为图文不符，还是文本本身有问题。</li>
-      </ul>
-
-      <h2>把交互拆成五类专家</h2>
-      <p>受混合专家（Mixture-of-Experts, MoE）思想启发，我把跨模态交互<strong>显式分解为五类专家</strong>，让不同的样本走不同的「判据通道」：</p>
-      <div class="kv">
-        <div class="kvc"><div class="k">Text-Unique</div><div class="v">文本唯一性</div></div>
-        <div class="kvc"><div class="k">Image-Unique</div><div class="v">图像唯一性</div></div>
-        <div class="kvc"><div class="k">Fusion-Unique</div><div class="v">融合唯一性</div></div>
-        <div class="kvc"><div class="k">Synergy</div><div class="v">协同</div></div>
-        <div class="kvc"><div class="k">Redundancy</div><div class="v">冗余</div></div>
-      </div>
-      <p>「协同」专家关注图文必须结合才能暴露的线索；「冗余」专家关注图文重复印证的信息；三个「唯一性」专家则分别捕捉只属于单一模态、或只属于融合表征的判据。一个<strong>实例级（instance-level）路由器</strong>会根据每条样本，动态给五类专家分配权重 —— 这组权重本身，就是一份天然的<strong>决策解释</strong>。</p>
-
-      <div class="callout">
-        <span class="ci">🧩</span>
-        <p><b>核心直觉：</b>不要逼一个融合层学会处理所有情况。把交互拆开，让<b>对的专家</b>处理<b>对的样本</b>，并让路由权重告诉你「它为什么这么判」。</p>
-      </div>
-
-      <h2>统一维度的特征地基</h2>
-      <p>要让五类专家公平协作，前提是它们拿到的表征处在同一个「坐标系」里。我构建了一条统一维度的多模态特征提取流程：</p>
-      <ul>
-        <li><strong>文本：</strong>BERT 风格编码器，提取语义表征；</li>
-        <li><strong>图像：</strong>MAE 预训练的 ViT-B/16，捕捉视觉结构；</li>
-        <li><strong>对齐：</strong>CLIP ViT-B/16，提供图文语义对齐的高维表征。</li>
-      </ul>
-      <p>三路特征被投影到统一维度，作为五类专家共同的输入空间。</p>
-
-      <h2>让模型「不偷懒」：鲁棒性训练</h2>
-      <p>多模态模型有个臭名昭著的毛病 —— <strong>偷懒</strong>：只要文本信号够强，它就懒得看图。为了逼它真正学会跨模态判断，我设计了几项训练机制：</p>
-      <ul>
-        <li><strong>模态替换训练（Modality Replacement）：</strong>训练时随机替换某一模态，迫使模型不能只依赖单一信号。</li>
-        <li><strong>三元组唯一性损失：</strong>显式约束三个「唯一性」专家学到彼此区分的表征。</li>
-        <li><strong>协同损失 + 辅助分类头：</strong>强化「协同」专家对图文联合线索的敏感度。</li>
-      </ul>
-
-      <h2>实验：在三个基准上验证</h2>
-      <p>我在 <strong>Weibo、Weibo-21、Gossip</strong> 三个公开基准上完成了主实验与消融实验。消融的结果很说明问题：当我逐一移除五类专家中的任意一类时，性能都会下降 —— 这说明它们各自捕捉到了不可替代的判据，而不是冗余堆叠。</p>
-      <blockquote>
-        <p>对我来说，比刷高一个点更重要的，是消融实验告诉我：这套「拆分」是有意义的。模型不是因为更大而更好，而是因为<strong>结构对了</strong>。</p>
-      </blockquote>
-
-      <h2>写在最后</h2>
-      <p>IMEX-FND 让我对「可解释性」有了新的理解：解释不一定要事后用工具去「扒」，它可以从一开始就<strong>被设计进模型的结构里</strong>。当路由权重天然地回答了「模型在看什么」，可解释就不再是负担，而是副产品。</p>
-
-      <div class="callout">
-        <span class="ci">📄</span>
-        <p>这篇文章对应论文《IMEX-FND: Interaction-Aware Mixture-of-Experts Framework for Multimodal Fake News Detection》，已投稿 <b>WISE 2026</b>。<a href="../index.html#contact">欢迎交流</a>。</p>
-      </div>
-
-      <div class="post-foot">
-        <a class="back" href="../articles.html"><span class="arrow">←</span> 返回文章列表</a>
-        <span class="share">王子峻 · wangzijun.top</span>
-      </div>
-    </div>
-  </div>
-</article>
-
-<script src="../main.js"></script>
-</body>
-</html>
+<nav class="nav" id="nav"><div class="wrap"><a class="nav-brand" href="../index.html"><span class="dot"></span> Wang Zijun</a><ul class="nav-links" id="navLinks"><li><a href="../index.html#about">About</a></li><li><a href="../index.html#research">Research</a></li><li><a href="../articles.html">Writing</a></li><li><a href="../index.html#friends">Links</a></li><li><a class="nav-cta" href="../index.html#contact">Contact</a></li></ul><button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+<header class="post-hero post-hero--c2"><div class="wrap"><div class="crumbs"><a href="../index.html">Home</a> · <a href="../articles.html">Writing</a> · Multimodal Learning</div><div class="post-meta-row"><span class="tag purple">Research Note · 2025</span><span class="tag">Multimodal Learning</span><span class="tag">Mixture of Experts</span><span class="tag">Deep Learning</span></div><h1>Decomposing Multimodal Fake News with Mixture of Experts</h1><p class="dek">When a news item’s text and image tell different stories, the important signal may lie in their relationship. Can a model make that relationship visible?</p><div class="post-byline"><span class="av"><img src="../assets/img/portrait.jpg" alt="Wang Zijun" /></span><span><b>Wang Zijun</b> · 2025 · 9 min read</span></div></div></header>
+<article class="article"><div class="wrap"><div class="prose">
+<p class="lead-para">A real disaster photo paired with a misleading caption can create a convincing false story. In multimodal fake news, an image may be authentic and a sentence may sound plausible—the issue lies in their <strong>interaction</strong>. Many detectors concatenate the two modalities too early and lose that signal.</p>
+<p><strong>IMEX-FND</strong>—Interaction-aware Mixture-of-Experts for Fake News Detection—explores how to make those interactions explicit, inspectable, and useful for classification.</p>
+<h2>The problem with coarse fusion</h2>
+<p>Typical multimodal methods concatenate text and image features, or pass them through an attention block, before classification. That can hide two important differences:</p>
+<ul><li><strong>Different cases need different evidence.</strong> Some false stories are exposed by text-image inconsistency; others by a single modality.</li><li><strong>Decisions become opaque.</strong> A classifier may label an item false without indicating whether the text, the image, or their mismatch was decisive.</li></ul>
+<h2>Five experts for five kinds of interaction</h2>
+<p>The framework separates cross-modal evidence into five experts:</p>
+<div class="kv"><div class="kvc"><div class="k">Text-Unique</div><div class="v">Text-only evidence</div></div><div class="kvc"><div class="k">Image-Unique</div><div class="v">Image-only evidence</div></div><div class="kvc"><div class="k">Fusion-Unique</div><div class="v">Fusion-specific evidence</div></div><div class="kvc"><div class="k">Synergy</div><div class="v">Jointly revealing evidence</div></div><div class="kvc"><div class="k">Redundancy</div><div class="v">Mutually reinforcing evidence</div></div></div>
+<p>An <strong>instance-level router</strong> assigns weights to these experts for each item. Those weights act as a direct explanation of which type of evidence influenced a decision.</p>
+<div class="callout"><span class="ci">🧩</span><p><b>Core idea:</b> do not ask one fusion layer to handle every kind of example. Separate the interactions, let the right expert handle the right case, and use routing weights to show why.</p></div>
+<h2>A shared representation space</h2>
+<p>The experts work from a common-dimensional feature space built from a BERT-style text encoder, an MAE-pretrained ViT-B/16 image encoder, and CLIP ViT-B/16 for text-image alignment. Projecting these features into a shared space makes the expert outputs comparable.</p>
+<h2>Training for robust multimodal reasoning</h2>
+<p>Multimodal models often rely too heavily on the strongest modality. To reduce that shortcut, the project uses modality replacement during training, losses that distinguish the uniqueness experts, and auxiliary objectives for the synergy expert.</p>
+<h2>What matters</h2>
+<p>The central point is not simply to increase model capacity. It is to choose a structure that matches the problem: model decisions should reflect whether the evidence is textual, visual, contradictory, complementary, or redundant.</p>
+<div class="callout"><span class="ci">📄</span><p>This is a research note on <b>IMEX-FND</b>. It is separate from the WISE 2026 paper listed on this site. <a href="../index.html#contact">Get in touch</a> to discuss the project.</p></div>
+<div class="post-foot"><a class="back" href="../articles.html"><span class="arrow">←</span> Back to writing</a><span class="share">Wang Zijun · wangzijun.top</span></div>
+</div></div></article><script src="../main.js"></script></body></html>

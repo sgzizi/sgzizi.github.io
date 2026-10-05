@@ -1,5 +1,5 @@
 /* =========================================================
-   王子峻 · 个人主页 — interactions
+   Wang Zijun · Personal website — interactions
    ========================================================= */
 (function () {
   "use strict";

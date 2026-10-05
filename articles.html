@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>文章列表 · 王子峻 Wang Zijun</title>
-<meta name="description" content="王子峻的全部文章 —— 关于多智能体、多模态深度学习、编码理论与一些随想。" />
+<title>Writing · Wang Zijun</title>
+<meta name="description" content="Writing by Wang Zijun on multi-agent systems, knowledge graphs, reliable AI, coding theory, and occasional notes." />
 <link rel="canonical" href="https://wangzijun.top/articles.html" />
 <meta name="theme-color" content="#fbfbfd" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230a84ff'/%3E%3Cstop offset='0.5' stop-color='%235e5ce6'/%3E%3Cstop offset='1' stop-color='%23bf5af2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ctext x='50' y='69' font-size='58' font-family='-apple-system,Helvetica,Arial' font-weight='700' fill='white' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E" />
@@ -14,77 +14,87 @@
 
 <nav class="nav" id="nav">
   <div class="wrap">
-    <a class="nav-brand" href="index.html"><span class="dot"></span> 王子峻</a>
+    <a class="nav-brand" href="index.html"><span class="dot"></span> Wang Zijun</a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html#about">关于</a></li>
-      <li><a href="index.html#research">研究</a></li>
-      <li><a href="articles.html" class="active">文章</a></li>
-      <li><a href="index.html#musings">碎碎念</a></li>
-      <li><a href="index.html#friends">友链</a></li>
-      <li><a class="nav-cta" href="index.html#contact">联系我</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#research">Research</a></li>
+      <li><a href="articles.html" class="active">Writing</a></li>
+      <li><a href="index.html#musings">Notes</a></li>
+      <li><a href="index.html#friends">Links</a></li>
+      <li><a class="nav-cta" href="index.html#contact">Contact</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <header class="archive-head">
   <div class="wrap">
-    <p class="eyebrow">文章列表 / Writing</p>
-    <h1 class="section-title" style="margin-bottom:14px">所有文章。</h1>
-    <p class="section-lead" style="margin-bottom:0">把研究、思考与生活，慢慢写下来。按时间倒序排列。</p>
+    <p class="eyebrow">Writing</p>
+    <h1 class="section-title" style="margin-bottom:14px">All writing.</h1>
+    <p class="section-lead" style="margin-bottom:0">Research, ideas, and life—written down over time. Newest first.</p>
   </div>
 </header>
 
 <main class="wrap">
   <div class="archive-list">
+    <div class="arc-year reveal">2026</div>
+
+    <a class="arc-item reveal" href="posts/mars-gov.html">
+        <span class="adate">2026</span>
+        <span class="atitle">When multi-agent systems become a jury for government text
+          <span class="adesc">The co-authored paper “The 10th Juror” was accepted to EMNLP 2026.</span>
+      </span>
+      <span class="acat">EMNLP</span>
+    </a>
+
     <div class="arc-year reveal">2025</div>
 
     <a class="arc-item reveal" href="posts/mars-gov.html">
       <span class="adate">2025.11</span>
-      <span class="atitle">当多智能体系统成为政府文本的「陪审团」
-        <span class="adesc">MARS-Gov 如何用「第十陪审员」机制，发现预定义类别之外、被忽视的受影响群体。</span>
+      <span class="atitle">When multi-agent systems become a jury for government text
+        <span class="adesc">How MARS-Gov uses a “tenth juror” to identify overlooked groups beyond predefined categories.</span>
       </span>
-      <span class="acat">多智能体</span>
+      <span class="acat">Multi-Agent Systems</span>
     </a>
 
     <a class="arc-item reveal" href="posts/imex-fnd.html">
       <span class="adate">2025.09</span>
-      <span class="atitle">用混合专家拆解多模态虚假新闻
-        <span class="adesc">当文本与图像各执一词，IMEX-FND 用五类专家把跨模态交互看得清清楚楚。</span>
+      <span class="atitle">Decomposing multimodal fake news with mixture of experts
+        <span class="adesc">When text and images disagree, IMEX-FND makes their interactions more interpretable with five experts.</span>
       </span>
-      <span class="acat">多模态</span>
+      <span class="acat">Multimodal Learning</span>
     </a>
 
     <a class="arc-item reveal" href="posts/evenodd.html">
       <span class="adate">2025.05</span>
-      <span class="atitle">从 EVENODD 编码聊容错与效率的取舍
-        <span class="adesc">为什么两块磁盘的冗余，可以只用异或运算就换来强大的容错？代价又在哪里。</span>
+      <span class="atitle">EVENODD coding: fault tolerance versus efficiency
+        <span class="adesc">Why can two disks of redundancy deliver strong fault tolerance through XOR operations—and what is the cost?</span>
       </span>
-      <span class="acat">编码理论</span>
+      <span class="acat">Coding Theory</span>
     </a>
 
-    <div class="arc-year reveal">更多</div>
+    <div class="arc-year reveal">More</div>
     <a class="arc-item reveal" href="index.html#musings">
-      <span class="adate">不定期</span>
-      <span class="atitle">生活碎碎念
-        <span class="adesc">一些不一定关于研究的小想法，随手记在首页的「碎碎念」里。</span>
+      <span class="adate">Occasional</span>
+      <span class="atitle">Notes
+        <span class="adesc">Short thoughts not always related to research, collected on the homepage.</span>
       </span>
-      <span class="acat">随想</span>
+      <span class="acat">Notes</span>
     </a>
   </div>
 </main>
 
 <section class="contact" id="contact" style="padding-top:90px">
   <div class="wrap">
-    <h2>想第一时间读到更新？</h2>
-    <p class="lead">这个博客还在慢慢生长。欢迎收藏 wangzijun.top，或直接和我聊聊。</p>
+    <h2>Want to keep up with updates?</h2>
+    <p class="lead">This site is still growing. Bookmark wangzijun.top, or get in touch directly.</p>
     <div class="contact-methods">
       <a class="cmethod" href="mailto:17775808968@163.com"><span class="ic">✉️</span> 17775808968@163.com</a>
-      <a class="cmethod" href="index.html"><span class="ic">🏠</span> 返回首页</a>
+      <a class="cmethod" href="index.html"><span class="ic">🏠</span> Back to homepage</a>
     </div>
     <div class="footer-line">
-      <span>© 2026 王子峻 Wang Zijun · <a href="https://wangzijun.top">wangzijun.top</a></span>
-      <span>研究 · 构建 · 书写</span>
+      <span>© 2026 Wang Zijun · <a href="https://wangzijun.top">wangzijun.top</a></span>
+      <span>Research · Build · Write</span>
     </div>
   </div>
 </section>
