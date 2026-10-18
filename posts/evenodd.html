@@ -1,17 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="no-js">
 <head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>EVENODD Coding: Fault Tolerance Versus Efficiency · Wang Zijun</title>
-<meta name="description" content="A note on EVENODD coding, double-disk fault tolerance, and the trade-off between inexpensive XOR operations and recovery efficiency." />
-<link rel="canonical" href="https://wangzijun.top/posts/evenodd.html" /><meta property="og:type" content="article" />
-<meta property="og:title" content="EVENODD Coding: Fault Tolerance Versus Efficiency" /><meta property="og:description" content="The engineering trade-off behind XOR-based double-disk fault tolerance." />
-<meta name="theme-color" content="#fff3e6" /><link rel="stylesheet" href="../styles.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVENODD Coding: Fault Tolerance Versus Efficiency - Zijun Wang (王子峻)</title>
+  <meta name="description" content="A note on EVENODD coding, double-disk fault tolerance, and the trade-off between inexpensive XOR operations and recovery efficiency.">
+  <meta name="author" content="Zijun Wang">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://wangzijun.top/posts/evenodd.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="EVENODD Coding: Fault Tolerance Versus Efficiency - Zijun Wang (王子峻)">
+  <meta property="og:description" content="A note on EVENODD coding, double-disk fault tolerance, and the trade-off between inexpensive XOR operations and recovery efficiency.">
+  <meta property="og:url" content="https://wangzijun.top/posts/evenodd.html">
+  <meta property="og:image" content="https://wangzijun.top/assets/img/profile.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/jpeg" href="../assets/img/profile.jpg">
+  <link rel="stylesheet" href="../assets/css/academic.css">
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../main.js" defer></script>
 </head>
 <body>
-<nav class="nav" id="nav"><div class="wrap"><a class="nav-brand" href="../index.html"><span class="dot"></span> Wang Zijun</a><ul class="nav-links" id="navLinks"><li><a href="../index.html#about">About</a></li><li><a href="../index.html#research">Research</a></li><li><a href="../articles.html">Writing</a></li><li><a href="../index.html#friends">Links</a></li><li><a class="nav-cta" href="../index.html#contact">Contact</a></li></ul><button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
-<header class="post-hero post-hero--c3"><div class="wrap"><div class="crumbs"><a href="../index.html">Home</a> · <a href="../articles.html">Writing</a> · Coding Theory</div><div class="post-meta-row"><span class="tag green">Published · Preprint</span><span class="tag">Coding Theory</span><span class="tag">Storage Systems</span><span class="tag">Fault Tolerance</span></div><h1>EVENODD Coding: Fault Tolerance Versus Efficiency</h1><p class="dek">Cheap XOR operations can recover data after two disk failures. It sounds like magic—but every elegant design has a cost.</p><div class="post-byline"><span class="av"><img src="../assets/img/portrait.jpg" alt="Wang Zijun" /></span><span><b>Wang Zijun</b> · 2025 · 7 min read</span></div></div></header>
-<article class="article"><div class="wrap"><div class="prose">
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="masthead">
+    <div class="masthead__inner-wrap">
+      <div class="masthead__menu">
+        <nav id="site-nav" class="greedy-nav" aria-label="Main navigation">
+          <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="navigation-links" aria-expanded="false"><span class="navicon"></span></button>
+          <ul class="visible-links" id="navigation-links">
+            <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a href="../index.html">Homepage</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#about-me">About Me</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#news">News</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#publications">Publications</a></li>
+            <li class="masthead__menu-item"><a href="../articles.html" aria-current="page">Blog</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#experience">Experience</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#education">Education</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#awards">Awards</a></li>
+            <li class="masthead__menu-item"><a href="../assets/cv.pdf">CV</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <aside class="sidebar sticky" aria-label="About Zijun Wang">
+      <div class="profile_box" itemscope itemtype="https://schema.org/Person">
+        <div class="author__avatar">
+          <img src="../assets/img/profile.jpg" alt="Zijun Wang (王子峻)" width="175" height="233" itemprop="image">
+        </div>
+        <div class="author__content">
+          <h3 class="author__name" itemprop="name">Zijun Wang <span class="author__name-cn">(王子峻)</span></h3>
+        </div>
+        <div class="author__urls-wrapper">
+          <ul class="author__urls social-icons">
+            <li><div class="author__role">Undergraduate Student</div></li>
+            <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> Qinhuangdao, China</li>
+            <li class="author__affiliation"><i class="fas fa-fw fa-university" aria-hidden="true"></i> Northeastern University</li>
+            <li><a href="mailto:17775808968@163.com" itemprop="email"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+            <li><a href="https://github.com/sgzizi" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+            <li><a href="../assets/cv.pdf"><i class="fas fa-fw fa-file-pdf" aria-hidden="true"></i> CV</a></li>
+          </ul>
+          <div class="author__urls_sm">
+            <a href="mailto:17775808968@163.com" aria-label="Email Zijun Wang"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
+            <a href="https://github.com/sgzizi" aria-label="Zijun Wang on GitHub"><i class="fab fa-fw fa-github" aria-hidden="true"></i></a>
+            <a href="../assets/cv.pdf" aria-label="Read Zijun Wang's CV"><i class="fas fa-fw fa-file-pdf" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <article class="page" id="content" aria-label="Blog">
+      <div class="page__inner-wrap">
+        <div class="page__content">
+          <div class="blog-article">
+            <header class="blog-article__header">
+              <a class="blog-article__back" href="../articles.html">← Back to blog</a>
+              <h1>EVENODD Coding: Fault Tolerance Versus Efficiency</h1>
+              <p class="blog-list__meta">Zijun Wang · 2025 · 7 min read</p>
+              <p>Cheap XOR operations can recover data after two disk failures. It sounds like magic—but every elegant design has a cost.</p>
+            </header>
+
 <p class="lead-para">Drives fail. In a storage array with tens or hundreds of disks, the question is not whether a drive will fail, but when. Fault-tolerant codes are the system’s insurance policy, and EVENODD is an especially elegant example.</p>
 <p>At the IHUB Research Program, I worked with <strong>Prof. Lara Dolecek</strong> to study parity computation, error correction, and fault tolerance in EVENODD codes. Using MATLAB simulations, I compared the complexity and efficiency of different parity-calculation approaches under multi-disk-failure scenarios.</p>
 <h2>The need for double-disk tolerance</h2>
@@ -34,5 +102,12 @@
 <p>I built simulations that compared parity-calculation schemes on the same scale, measuring system complexity and execution efficiency during multi-node and multi-disk recovery. The useful question is not only “Can we recover the data?” but also “How quickly, and at what cost?”</p>
 <blockquote><p>There is no universally best fault-tolerant code—only a design that is best suited to a particular failure model and hardware constraint.</p></blockquote>
 <div class="callout"><span class="ci">📄</span><p>This article accompanies the published preprint <i>Advanced Parity Calculation Techniques in EVENODD Coding</i>. <a href="https://doi.org/10.61173/ww1ryv48" target="_blank" rel="noopener">DOI: 10.61173/ww1ryv48 ↗</a></p></div>
-<div class="post-foot"><a class="back" href="../articles.html"><span class="arrow">←</span> Back to writing</a><span class="share">Wang Zijun · wangzijun.top</span></div>
-</div></div></article><script src="../main.js"></script></body></html>
+
+            <footer class="blog-article__footer"><a href="../articles.html">← Back to blog</a></footer>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

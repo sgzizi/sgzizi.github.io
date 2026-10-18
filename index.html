@@ -1,507 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="no-js">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Wang Zijun — Communication Engineering & AI Research</title>
-<meta name="description" content="Wang Zijun's personal website. Communication engineering and AI research, with four accepted conference papers: three at WISE 2026 and one at EMNLP 2026." />
-<meta name="author" content="Wang Zijun" />
-<link rel="canonical" href="https://wangzijun.top/" />
-
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Wang Zijun — Communication Engineering & AI Research" />
-<meta property="og:description" content="Researching, building, and writing at the intersection of communication engineering, AI, and hardware." />
-<meta property="og:url" content="https://wangzijun.top/" />
-<meta property="og:image" content="https://wangzijun.top/assets/img/portrait.jpg" />
-<meta name="theme-color" content="#fbfbfd" />
-
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230a84ff'/%3E%3Cstop offset='0.5' stop-color='%235e5ce6'/%3E%3Cstop offset='1' stop-color='%23bf5af2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ctext x='50' y='69' font-size='58' font-family='-apple-system,Helvetica,Arial' font-weight='700' fill='white' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E" />
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zijun Wang (王子峻) - Homepage</title>
+  <meta name="description" content="Zijun Wang, an undergraduate in Communication Engineering at Northeastern University at Qinhuangdao. Research in large language models, multi-agent systems, multimodal learning, and recommendation.">
+  <meta name="author" content="Zijun Wang">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://wangzijun.top/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Zijun Wang (王子峻) - Homepage">
+  <meta property="og:description" content="Zijun Wang, an undergraduate in Communication Engineering at Northeastern University at Qinhuangdao. Research in large language models, multi-agent systems, multimodal learning, and recommendation.">
+  <meta property="og:url" content="https://wangzijun.top/">
+  <meta property="og:image" content="https://wangzijun.top/assets/img/profile.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/jpeg" href="assets/img/profile.jpg">
+  <link rel="stylesheet" href="assets/css/academic.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
 </head>
 <body>
-
-<!-- ===================== NAV ===================== -->
-<nav class="nav" id="nav">
-  <div class="wrap">
-    <a class="nav-brand" href="#top"><span class="dot"></span> Wang Zijun</a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about">About</a></li>
-      <li><a href="#news">News</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="#writing">Writing</a></li>
-      <li><a href="#musings">Notes</a></li>
-      <li><a href="#friends">Links</a></li>
-      <li><a class="nav-cta" href="#contact">Contact</a></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- ===================== HERO ===================== -->
-<header class="hero" id="top">
-  <div class="hero-bg"></div>
-  <div class="wrap">
-    <div class="hero-copy">
-      <span class="hero-kicker"><span class="pulse"></span> Northeastern University at Qinhuangdao · Communication Engineering · Class of 2027</span>
-      <h1>Wang Zijun</h1>
-      <p class="hero-role">Exploring the intersection of <span class="grad-text">communication, AI, and hardware</span>.</p>
-      <p class="hero-tag hero-motto">nothing but the <span class="grad-text">best</span>.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#research">View research <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="#writing">Read my writing</a>
-      </div>
-      <div class="hero-links">
-        <a class="hlink" href="mailto:17775808968@163.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-          Email
-        </a>
-        <a class="hlink" href="assets/cv.pdf" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
-          CV
-        </a>
-        <a class="hlink" href="https://github.com/sgzizi" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1a11 11 0 0 0-3.5 21.4c.55.1.75-.24.75-.53v-1.86c-3.06.67-3.71-1.3-3.71-1.3-.5-1.27-1.22-1.61-1.22-1.61-1-.68.08-.67.08-.67 1.1.08 1.69 1.13 1.69 1.13.98 1.69 2.58 1.2 3.21.92.1-.71.39-1.2.7-1.47-2.44-.28-5.01-1.22-5.01-5.43 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.4 10.4 0 0 1 5.5 0c2.1-1.43 3.02-1.13 3.02-1.13.6 1.52.22 2.64.11 2.92.7.77 1.13 1.75 1.13 2.95 0 4.22-2.58 5.15-5.03 5.42.4.34.75 1.02.75 2.06v3.05c0 .3.2.64.76.53A11 11 0 0 0 12 1z"/></svg>
-          GitHub
-        </a>
-        <a class="hlink" href="https://scholar.google.com/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.91V17h2V9zM5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg>
-          Scholar
-        </a>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="masthead">
+    <div class="masthead__inner-wrap">
+      <div class="masthead__menu">
+        <nav id="site-nav" class="greedy-nav" aria-label="Main navigation">
+          <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="navigation-links" aria-expanded="false"><span class="navicon"></span></button>
+          <ul class="visible-links" id="navigation-links">
+            <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a href="#about-me">Homepage</a></li>
+            <li class="masthead__menu-item"><a href="#about-me">About Me</a></li>
+            <li class="masthead__menu-item"><a href="#news">News</a></li>
+            <li class="masthead__menu-item"><a href="#publications">Publications</a></li>
+            <li class="masthead__menu-item"><a href="articles.html">Blog</a></li>
+            <li class="masthead__menu-item"><a href="#experience">Experience</a></li>
+            <li class="masthead__menu-item"><a href="#education">Education</a></li>
+            <li class="masthead__menu-item"><a href="#awards">Awards</a></li>
+            <li class="masthead__menu-item"><a href="assets/cv.pdf">CV</a></li>
+          </ul>
+        </nav>
       </div>
     </div>
-    <div class="hero-portrait">
-      <div class="glow"></div>
-      <div class="frame">
-        <img src="assets/img/portrait.jpg" alt="Portrait of Wang Zijun" />
-      </div>
-      <span class="deco deco-ring" aria-hidden="true"></span>
-      <span class="deco deco-dot" aria-hidden="true"></span>
-      <span class="deco deco-plus" aria-hidden="true">✦</span>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <div class="mouse"></div>
-    SCROLL
-  </div>
-</header>
+  </header>
 
-<!-- ===================== ABOUT ===================== -->
-<section class="section" id="about">
-  <div class="wrap">
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <p class="eyebrow">About</p>
-        <p>Hi, I’m <strong>Wang Zijun</strong>, an undergraduate in Communication Engineering at Northeastern University at Qinhuangdao. I am drawn to one question: how can we make systems more intelligent and dependable?</p>
-        <p>My interests span three connected areas: <strong>large language models and multi-agent systems</strong>, <strong>multimodal learning and graph-based recommendation</strong>, and <strong>communication and coding theory</strong>. My co-authored work includes bureaucratic-bias detection, multimodal fake-news detection, and uncertainty-aware and cold-start recommendation, with <strong>three papers accepted to WISE 2026 and one to EMNLP 2026</strong>. At the IHUB Research Program, I also studied fault tolerance and computational efficiency in EVENODD coding.</p>
-        <p>Beyond research, I have worked on FPC/PCB hardware engineering and embedded development in industry. I value research that is theoretically sound and grounded in real systems. This site is where I collect ideas, document what I build, and connect with others.</p>
-        <p class="signature">— Open to research collaborations and internships · Qinhuangdao, China</p>
-      </div>
-      <div class="stats">
-        <div class="stat reveal d1"><div class="num">4</div><div class="desc">Accepted conference papers<br>3 WISE · 1 EMNLP</div></div>
-        <div class="stat reveal d2"><div class="num">3.83</div><div class="desc">GPA / 4.0<br>Undergraduate</div></div>
-        <div class="stat reveal d3"><div class="num">3</div><div class="desc">Provincial competition<br>awards</div></div>
-        <div class="stat reveal d4"><div class="num">4</div><div class="desc">Research and industry<br>experiences</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== NEWS ===================== -->
-<section class="section section--alt" id="news">
-  <div class="wrap">
-    <p class="eyebrow reveal">News</p>
-    <h2 class="section-title reveal">What I’ve been working on.</h2>
-    <p class="section-lead reveal">A timeline of research, competitions, and industry experience.</p>
-    <div class="news">
-      <div class="news-item reveal"><span class="ndate">2026</span><div class="nbody"><span class="pill pub">Accepted</span>Co-authored paper <i>The “10th Juror”: Open-Set Standpoint Screening for Bureaucratic Bias Detection</i> accepted to <b>EMNLP 2026</b>.</div></div>
-      <div class="news-item reveal"><span class="ndate">2026</span><div class="nbody"><span class="pill pub">Accepted</span>Three co-authored papers accepted to <b>WISE 2026</b>: <a href="https://arxiv.org/abs/2609.29610" target="_blank" rel="noopener">IMEX-FND ↗</a>, <a href="https://arxiv.org/abs/2609.29609" target="_blank" rel="noopener">UHIFlow ↗</a>, and <a href="https://arxiv.org/abs/2608.25381" target="_blank" rel="noopener">MOTIF ↗</a>.</div></div>
-      <div class="news-item reveal"><span class="ndate">2026.04</span><div class="nbody"><span class="pill work">Internship</span>Completed an FPC engineering internship at <b>Bomine Electronics</b>.</div></div>
-      <div class="news-item reveal"><span class="ndate">2025.09</span><div class="nbody"><span class="pill award">Award</span>Received the <b>Provincial Second Prize</b> in the “Zhengda Cup” National Student Market Survey and Analysis Competition.</div></div>
-      <div class="news-item reveal"><span class="ndate">2025.06</span><div class="nbody"><span class="pill award">Award</span>Received the <b>Provincial First Prize</b> in the 12th National College Student New-Generation Information and Communication Technology Competition.</div></div>
-      <div class="news-item reveal"><span class="ndate">2025.05</span><div class="nbody"><span class="pill pub">Preprint</span>Published an EVENODD fault-tolerance preprint with Prof. Lara Dolecek (<a href="https://doi.org/10.61173/ww1ryv48" target="_blank" rel="noopener">DOI ↗</a>).</div></div>
-      <div class="news-item reveal"><span class="ndate">2025.01</span><div class="nbody"><span class="pill pub">Research</span>Began research collaborations in multi-agent governance and multimodal learning.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== RESEARCH ===================== -->
-<section class="section" id="research">
-  <div class="wrap">
-    <p class="eyebrow reveal">Publications</p>
-    <h2 class="section-title reveal">Turning ideas into papers.</h2>
-    <p class="section-lead reveal">Four accepted conference papers: three at WISE 2026 and one at EMNLP 2026, alongside earlier work on reliable computing.</p>
-
-    <div class="pub-list">
-      <article class="pub reveal">
-        <div class="pub-idx">01</div>
-        <div class="pub-body">
-          <h3>The "10th Juror": Open-Set Standpoint Screening for Bureaucratic Bias Detection</h3>
-          <div class="meta">
-            <span class="tag blue">EMNLP 2026 · Accepted</span>
-            <span class="tag">Multi-Agent Systems</span>
-            <span class="tag">NLP</span>
-            <span>Wang Zijun · Second author · 2026</span>
+  <main id="main">
+    <aside class="sidebar sticky" aria-label="About Zijun Wang">
+      <div class="profile_box" itemscope itemtype="https://schema.org/Person">
+        <div class="author__avatar">
+          <img src="assets/img/profile.jpg" alt="Zijun Wang (王子峻)" width="175" height="233" itemprop="image">
+        </div>
+        <div class="author__content">
+          <h3 class="author__name" itemprop="name">Zijun Wang <span class="author__name-cn">(王子峻)</span></h3>
+        </div>
+        <div class="author__urls-wrapper">
+          <ul class="author__urls social-icons">
+            <li><div class="author__role">Undergraduate Student</div></li>
+            <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> Qinhuangdao, China</li>
+            <li class="author__affiliation"><i class="fas fa-fw fa-university" aria-hidden="true"></i> Northeastern University</li>
+            <li><a href="mailto:17775808968@163.com" itemprop="email"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+            <li><a href="https://github.com/sgzizi" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+            <li><a href="assets/cv.pdf"><i class="fas fa-fw fa-file-pdf" aria-hidden="true"></i> CV</a></li>
+          </ul>
+          <div class="author__urls_sm">
+            <a href="mailto:17775808968@163.com" aria-label="Email Zijun Wang"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
+            <a href="https://github.com/sgzizi" aria-label="Zijun Wang on GitHub"><i class="fab fa-fw fa-github" aria-hidden="true"></i></a>
+            <a href="assets/cv.pdf" aria-label="Read Zijun Wang's CV"><i class="fas fa-fw fa-file-pdf" aria-hidden="true"></i></a>
           </div>
         </div>
-        <a class="pub-link" href="posts/mars-gov.html">Read more <span class="arrow">→</span></a>
-      </article>
+      </div>
+    </aside>
 
-      <article class="pub reveal d1">
-        <div class="pub-idx">02</div>
-        <div class="pub-body">
-          <h3>IMEX-FND: A Traceable Interaction-Aware Mixture-of-Experts Framework for Multimodal Fake News Detection</h3>
-          <div class="meta">
-            <span class="tag purple">WISE 2026 · Accepted</span>
-            <span class="tag">Multimodal Learning</span>
-            <span class="tag">Fake-News Detection</span>
-            <span>Yuchen Miao, <strong>Zijun Wang</strong>, Ke Liu, Peixuan Wang, Chang Han · Second author</span>
+    <article class="page" id="content" aria-label="Homepage">
+      <div class="page__inner-wrap">
+        <div class="page__content">
+          <p><span class="anchor" id="about-me"></span><span id="about"></span><span id="top"></span></p>
+          <p>I am an undergraduate student in Communication Engineering at <strong>Northeastern University at Qinhuangdao</strong>. My research interests include <strong>large language models and multi-agent systems</strong>, <strong>multimodal learning</strong>, and <strong>recommendation systems</strong>. I also work on communication and coding theory, with a focus on reliable computing.</p>
+
+          <h1 id="news">🔥 News</h1>
+          <ul>
+            <li><em>2026.08</em>: &nbsp;🎉 Our paper on open-set standpoint screening was accepted by the <a href="https://2026.emnlp.org/">EMNLP 2026 Main Conference</a>.</li>
+            <li><em>2026.08</em>: &nbsp;🎉 Three co-authored papers on uncertainty-aware recommendation, multimodal fake-news detection, and cold-start recommendation were accepted by <a href="https://conferences.sigappfr.org/wise2026/">WISE 2026</a>.</li>
+            <li><em>2026.04</em>: Completed an FPC engineering internship at <strong>Bomine Electronics</strong>.</li>
+            <li><em>2025.09</em>: Received the <strong>Provincial Second Prize</strong> in the “Zhengda Cup” National Student Market Survey and Analysis Competition.</li>
+            <li><em>2025.06</em>: Received the <strong>Provincial First Prize</strong> in the 12th National College Student New-Generation Information and Communication Technology Competition.</li>
+          </ul>
+
+          <span id="research"></span>
+          <h1 id="publications">📝 Selected Publications</h1>
+
+          <div class="paper-box">
+            <div class="paper-box-image"><div>
+              <div class="badge">EMNLP 2026 Main</div>
+              <img src="assets/img/publications/emnlp-10th-juror.png" alt="Framework of The 10th Juror" loading="lazy" width="400">
+            </div></div>
+            <div class="paper-box-text">
+              <p><strong>The “10th Juror”: Open-Set Standpoint Screening for Bureaucratic Bias Detection</strong></p>
+              <p>Yuchen Miao, <strong>Zijun Wang</strong>, Chang Han, Yurui Shi, Mingtai Zhang, and Siyang Xu</p>
+              <p><a href="assets/papers/emnlp-10th-juror.pdf">PDF</a> · <a href="https://arxiv.org/abs/2610.11136">arXiv</a> · <a href="https://yuchenmiao04.github.io/files/emnlp-10th-juror-poster.pdf">Poster</a> · <a href="https://www.bilibili.com/video/BV1QHHC6YEsH/">Video</a> · <a href="https://2026.emnlp.org/">Conference</a></p>
+            </div>
           </div>
-        </div>
-        <a class="pub-link" href="https://arxiv.org/abs/2609.29610" target="_blank" rel="noopener">Paper <span class="arrow">↗</span></a>
-      </article>
 
-      <article class="pub reveal d2">
-        <div class="pub-idx">03</div>
-        <div class="pub-body">
-          <h3>Anatomy of a Decision: Uncertainty-aware Hierarchical Intent Learning via Flow Matching for Multimodal Recommendation</h3>
-          <div class="meta">
-            <span class="tag purple">WISE 2026 · Accepted</span>
-            <span class="tag">UHIFlow</span>
-            <span class="tag">Flow Matching</span>
-            <span>Yuchen Miao, <strong>Zijun Wang</strong>, Ke Liu, Siyang Xu · Second author</span>
+          <div class="paper-box">
+            <div class="paper-box-image"><div>
+              <div class="badge">WISE 2026</div>
+              <img src="assets/img/publications/uhiflow.png" alt="UHIFlow framework" loading="lazy" width="400">
+            </div></div>
+            <div class="paper-box-text">
+              <p><strong>Anatomy of a Decision: Uncertainty-aware Hierarchical Intent Learning via Flow Matching for Multimodal Recommendation</strong></p>
+              <p>Yuchen Miao, <strong>Zijun Wang</strong>, Ke Liu, and Siyang Xu</p>
+              <p><a href="assets/papers/uhiflow.pdf">PDF</a> · <a href="https://arxiv.org/abs/2609.29609">arXiv</a> · <a href="https://www.bilibili.com/video/BV1sLpt6jEbX/">Video</a> · <a href="https://conferences.sigappfr.org/wise2026/">Conference</a></p>
+            </div>
           </div>
-        </div>
-        <a class="pub-link" href="https://arxiv.org/abs/2609.29609" target="_blank" rel="noopener">Paper <span class="arrow">↗</span></a>
-      </article>
 
-      <article class="pub reveal d3">
-        <div class="pub-idx">04</div>
-        <div class="pub-body">
-          <h3>MOTIF: Motivation-guided Topology Inference for Cold-start Multimodal Recommendation</h3>
-          <div class="meta">
-            <span class="tag purple">WISE 2026 · Accepted</span>
-            <span class="tag">Cold-Start Recommendation</span>
-            <span class="tag">Graph Learning</span>
-            <span>Yurui Shi, Yuchen Miao, Ximing Hu, <strong>Zijun Wang</strong>, Chang Han · Fourth author</span>
+          <div class="paper-box">
+            <div class="paper-box-image"><div>
+              <div class="badge">WISE 2026</div>
+              <img src="assets/img/publications/imex-fnd.png" alt="IMEX-FND framework" loading="lazy" width="400">
+            </div></div>
+            <div class="paper-box-text">
+              <p><strong>IMEX-FND: A Traceable Interaction-Aware Mixture-of-Experts Framework for Multimodal Fake News Detection</strong></p>
+              <p>Yuchen Miao, <strong>Zijun Wang</strong>, Ke Liu, Peixuan Wang, and Chang Han</p>
+              <p><a href="assets/papers/imex-fnd.pdf">PDF</a> · <a href="https://arxiv.org/abs/2609.29610">arXiv</a> · <a href="https://www.bilibili.com/video/BV16Hpx6YENu/">Video</a> · <a href="https://conferences.sigappfr.org/wise2026/">Conference</a></p>
+            </div>
           </div>
-        </div>
-        <a class="pub-link" href="https://arxiv.org/abs/2608.25381" target="_blank" rel="noopener">Paper <span class="arrow">↗</span></a>
-      </article>
 
-      <article class="pub reveal d4">
-        <div class="pub-idx">05</div>
-        <div class="pub-body">
-          <h3>Advanced Parity Calculation Techniques in EVENODD Coding: A Comparative Analysis of Fault Tolerance and Computational Efficiency</h3>
-          <div class="meta">
-            <span class="tag green">Published · Preprint</span>
-            <span class="tag">Coding Theory</span>
-            <span>Wang, Zijun · 2025</span>
+          <div class="paper-box">
+            <div class="paper-box-image"><div>
+              <div class="badge">WISE 2026</div>
+              <img src="assets/img/publications/motif.png" alt="MOTIF framework" loading="lazy" width="400">
+            </div></div>
+            <div class="paper-box-text">
+              <p><strong>MOTIF: Motivation-guided Topology Inference for Cold-start Multimodal Recommendation</strong></p>
+              <p>Yurui Shi<sup>†</sup>, Yuchen Miao<sup>†</sup>, Ximing Hu, <strong>Zijun Wang</strong>, and Chang Han</p>
+              <p>(† means equal contribution)</p>
+              <p><a href="assets/papers/motif.pdf">PDF</a> · <a href="https://arxiv.org/abs/2608.25381">arXiv</a> · <a href="https://conferences.sigappfr.org/wise2026/">Conference</a></p>
+            </div>
           </div>
-        </div>
-        <a class="pub-link" href="https://doi.org/10.61173/ww1ryv48" target="_blank" rel="noopener">DOI <span class="arrow">↗</span></a>
-      </article>
-    </div>
-  </div>
-</section>
 
-<!-- ===================== PROJECTS ===================== -->
-<section class="section section--alt" id="projects">
-  <div class="wrap">
-    <p class="eyebrow reveal">Projects</p>
-    <h2 class="section-title reveal">Systems I’m helping build.</h2>
-    <p class="section-lead reveal">Four collaborative research efforts in multi-agent governance, multimodal learning, and recommendation.</p>
+          <h2 id="preprints">Preprints</h2>
+          <ul>
+            <li><strong>Sharp Root Anti-Concentration via Projective Incidence and Ordered Root Laws.</strong> <strong>Zijun Wang</strong>, Yuchen Miao, Yifan Hu, and Huanmin Liu. 2026. <a href="https://arxiv.org/abs/2608.01670">arXiv</a></li>
+          </ul>
 
-    <div class="proj-grid">
-      <article class="proj reveal">
-        <div class="proj-top">
-          <div>
-            <h3 class="proj-name">MARS-Gov</h3>
-            <p class="proj-sub">Open-set standpoint screening and multi-agent governance for bureaucratic-bias detection in government text</p>
-          </div>
-          <span class="proj-role">EMNLP 2026 · Second author</span>
-        </div>
-        <p class="proj-desc">A closed-loop multi-agent governance workflow: legal and policy evidence retrieval, open-set target screening, a dual-jury mechanism, risk routing, and verdict rewriting for verification.</p>
-        <ul class="proj-points">
-          <li>Introduces a dual-jury mechanism with a <strong>fixed and dynamic “tenth juror”</strong> to identify affected groups beyond nine predefined bias categories.</li>
-          <li>Builds a normative-evidence context from Dutch anti-discrimination law, government accessibility guidance, and DGDB category definitions.</li>
-          <li>Uses risk-routing gates and verdict-rewriting verification to create an explainable, auditable governance loop.</li>
-        </ul>
-        <div class="proj-stack">
-          <span class="chip">Multi-Agent</span><span class="chip">RAG</span><span class="chip">Open-Set Screening</span><span class="chip">LLM</span><span class="chip">Prompt Engineering</span>
-        </div>
-      </article>
+          <h2 id="other-publications">Other Publications</h2>
+          <ul>
+            <li><strong>Advanced Parity Calculation Techniques in EVENODD Coding: A Comparative Analysis of Fault Tolerance and Computational Efficiency.</strong> <strong>Zijun Wang.</strong> 2025. <a href="https://doi.org/10.61173/ww1ryv48">DOI</a> · <a href="posts/evenodd.html">Research note</a></li>
+          </ul>
 
-      <article class="proj reveal d1">
-        <div class="proj-top">
-          <div>
-            <h3 class="proj-name">UHIFlow</h3>
-            <p class="proj-sub">Uncertainty-aware hierarchical intent learning via flow matching for multimodal recommendation</p>
-          </div>
-          <span class="proj-role">WISE 2026 · Second author</span>
-        </div>
-        <p class="proj-desc">Uses uncertainty estimates to adapt how broadly or precisely a recommender represents a user’s intent.</p>
-        <ul class="proj-points">
-          <li>Models visual and textual uncertainty with conditional flow matching.</li>
-          <li>Constructs a personalised coarse-to-fine hierarchy rather than using a fixed, flat set of intents.</li>
-        </ul>
-        <div class="proj-stack">
-          <span class="chip">Multimodal Recommendation</span><span class="chip">Flow Matching</span><span class="chip">Uncertainty</span><span class="chip">Hierarchical Intent</span>
-        </div>
-      </article>
+          <h1 id="experience">💻 Research &amp; Experience</h1>
+          <ul>
+            <li><em>2025–Present</em>, <strong>Research Collaborations</strong>. Research on multi-agent governance, bureaucratic-bias detection, explainable multimodal recommendation, and fake-news detection.</li>
+            <li><strong>IHUB Research Program</strong>. Research with Prof. Lara Dolecek on parity computation, fault tolerance, and computational efficiency in EVENODD coding using MATLAB simulations.</li>
+            <li><em>2026.01–2026.04</em>, <strong>FPC Engineering Intern</strong>, Bomine Electronics. Worked on design standards, process constraints, quality control, and R&amp;D sample tracking for flexible printed circuits.</li>
+            <li><em>2024.07–2024.10</em>, <strong>Embedded Systems &amp; PCB Design Intern</strong>, Kedinuoyi Technology. Developed embedded modules and device drivers in C, and designed and tested PCBs using Altium Designer.</li>
+            <li><em>2024.08–2024.09</em>, <strong>Software &amp; Data Assistant</strong>, Shenzhen Huaxing New Energy Technology. Supported software optimisation and collected and organised test data.</li>
+          </ul>
 
-      <article class="proj reveal d2">
-        <div class="proj-top">
-          <div>
-            <h3 class="proj-name">IMEX-FND</h3>
-            <p class="proj-sub">An interaction-aware mixture-of-experts framework for multimodal fake-news detection</p>
-          </div>
-          <span class="proj-role">WISE 2026 · Second author</span>
-        </div>
-        <p class="proj-desc">Explicitly decomposes cross-modal interactions into five experts, using sample-level dynamic weights for fine-grained and interpretable decisions.</p>
-        <ul class="proj-points">
-          <li>Builds a unified multimodal feature pipeline and an instance-level expert router.</li>
-          <li>Separates interactions into text uniqueness, image uniqueness, fusion uniqueness, synergy, and redundancy experts.</li>
-        </ul>
-        <div class="proj-stack">
-          <span class="chip">Mixture-of-Experts</span><span class="chip">Multimodal Fusion</span><span class="chip">ViT / MAE</span><span class="chip">CLIP</span><span class="chip">PyTorch</span>
-        </div>
-      </article>
+          <h1 id="education">📖 Education</h1>
+          <ul>
+            <li><em>2023–2027</em>, <strong>Northeastern University at Qinhuangdao</strong>, B.Eng. in Communication Engineering.</li>
+            <li>GPA: <strong>3.83 / 4.0</strong>.</li>
+          </ul>
 
-      <article class="proj reveal d3">
-        <div class="proj-top">
-          <div>
-            <h3 class="proj-name">MOTIF</h3>
-            <p class="proj-sub">Motivation-guided topology inference for cold-start multimodal recommendation</p>
-          </div>
-          <span class="proj-role">WISE 2026 · Fourth author</span>
-        </div>
-        <p class="proj-desc">Uses offline LLM reasoning about user motivations to reconnect cold-start items through more useful graph structure.</p>
-        <ul class="proj-points">
-          <li>Combines motivation reasoning, knowledge-enhanced graph reconstruction, and graph contrastive learning.</li>
-          <li>Aligns semantic and structural representations without requiring LLM calls during online recommendation.</li>
-        </ul>
-        <div class="proj-stack">
-          <span class="chip">Cold Start</span><span class="chip">Multimodal Recommendation</span><span class="chip">LLM Reasoning</span><span class="chip">Graph Contrastive Learning</span>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
+          <h1 id="awards">🎖 Honors and Awards</h1>
+          <ul>
+            <li><em>2025.06</em>, <strong>Provincial First Prize</strong>, 12th National College Student New-Generation Information and Communication Technology Competition.</li>
+            <li><em>2025.09</em>, <strong>Provincial Second Prize</strong>, “Zhengda Cup” National Student Market Survey and Analysis Competition.</li>
+            <li><em>2024.06</em>, <strong>Provincial Third Prize</strong>, 17th Chinese Collegiate Computing Design Competition.</li>
+          </ul>
 
-<!-- ===================== EXPERIENCE ===================== -->
-<section class="section" id="experience">
-  <div class="wrap">
-    <div class="about-grid">
-      <div>
-        <p class="eyebrow reveal">Experience</p>
-        <h2 class="section-title reveal">From lab to production line.</h2>
-        <p class="section-lead reveal" style="margin-bottom:0">Beyond research, I build engineering intuition through hardware and embedded-systems work.</p>
-      </div>
-      <div class="timeline">
-        <div class="tl-item reveal">
-          <div class="node"></div>
-          <span class="when">2026.01 – 2026.04</span>
-          <h3>FPC Engineering Intern</h3>
-          <div class="org">Bomine Electronics</div>
-          <p>Worked across the flexible printed circuit (FPC) engineering lifecycle, learning design standards, process constraints, and quality-control requirements for chip flex boards. Tracked R&amp;D samples and documented process issues across development stages.</p>
-        </div>
-        <div class="tl-item reveal d1">
-          <div class="node"></div>
-          <span class="when">2024.07 – 2024.10</span>
-          <h3>Embedded Systems &amp; PCB Design Intern</h3>
-          <div class="org">Kedinuoyi Technology</div>
-          <p>Developed hardware-facing embedded modules and device drivers in C. Created schematics and production-ready layouts for multiple PCBs in Altium Designer, and contributed to board testing and design iteration.</p>
-        </div>
-        <div class="tl-item reveal d2">
-          <div class="node"></div>
-          <span class="when">2024.08 – 2024.09</span>
-          <h3>Software &amp; Data Assistant</h3>
-          <div class="org">Shenzhen Huaxing New Energy Technology</div>
-          <p>Supported software optimisation for industrial systems and tools; collected and organised data in designated test scenarios for downstream analysis.</p>
+          <hr>
+          <p class="last-updated">Last updated: October 2026.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== AWARDS ===================== -->
-<section class="section section--alt" id="awards">
-  <div class="wrap">
-    <p class="eyebrow reveal">Awards</p>
-    <h2 class="section-title reveal">A few recognised milestones.</h2>
-    <p class="section-lead reveal">Provincial-level competition awards across communications, market analysis, and computer design.</p>
-    <div class="award-grid">
-      <article class="award reveal">
-        <span class="medal">🥇</span>
-        <div class="rank">Provincial First Prize</div>
-        <h3>12th National College Student New-Generation Information and Communication Technology Competition</h3>
-        <span class="date">2025.06</span>
-      </article>
-      <article class="award reveal d1">
-        <span class="medal">🥈</span>
-        <div class="rank">Provincial Second Prize</div>
-        <h3>“Zhengda Cup” National Student Market Survey and Analysis Competition</h3>
-        <span class="date">2025.09</span>
-      </article>
-      <article class="award reveal d2">
-        <span class="medal">🥉</span>
-        <div class="rank">Provincial Third Prize</div>
-        <h3>17th Chinese Collegiate Computing Design Competition</h3>
-        <span class="date">2024.06</span>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== SKILLS ===================== -->
-<section class="section" id="skills">
-  <div class="wrap">
-    <p class="eyebrow reveal">Toolbox</p>
-    <h2 class="section-title reveal">How I solve problems.</h2>
-    <p class="section-lead reveal">A toolkit that spans model training, embedded work, and circuit design.</p>
-    <div class="skill-grid">
-      <div class="skill-card reveal">
-        <div class="ico">🧠</div>
-        <h3>LLMs &amp; Natural Language Processing</h3>
-        <div class="chips">
-          <span class="chip">Multi-Agent Frameworks</span><span class="chip">Retrieval-Augmented Generation</span><span class="chip">Sentence Embeddings</span><span class="chip">Prompt Engineering</span><span class="chip">Hugging Face</span>
-        </div>
-      </div>
-      <div class="skill-card reveal d1">
-        <div class="ico">🔭</div>
-        <h3>Multimodal &amp; Deep Learning</h3>
-        <div class="chips">
-          <span class="chip">Mixture-of-Experts</span><span class="chip">Multimodal Fusion</span><span class="chip">Contrastive Learning</span><span class="chip">ViT / MAE</span><span class="chip">PyTorch</span>
-        </div>
-      </div>
-      <div class="skill-card reveal d2">
-        <div class="ico">📡</div>
-        <h3>Electronics &amp; Communications</h3>
-        <div class="chips">
-          <span class="chip">5G NR Physical Layer</span><span class="chip">Base-Station Configuration</span><span class="chip">Embedded Drivers</span><span class="chip">FPC / PCB Design</span><span class="chip">Altium Designer</span>
-        </div>
-      </div>
-      <div class="skill-card reveal d3">
-        <div class="ico">⌨️</div>
-        <h3>Languages &amp; Tools</h3>
-        <div class="chips">
-          <span class="chip">Python</span><span class="chip">C</span><span class="chip">MATLAB</span><span class="chip">Java</span><span class="chip">Git</span><span class="chip">LaTeX</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== WRITING / BLOG ===================== -->
-<section class="section section--alt" id="writing">
-  <div class="wrap">
-    <p class="eyebrow reveal">Writing</p>
-    <h2 class="section-title reveal">Explaining research for a wider audience.</h2>
-    <p class="section-lead reveal">I write about multi-agent systems, multimodal learning, and the trade-offs behind reliable computing. <a href="articles.html" style="font-weight:500">View all writing →</a></p>
-    <div class="post-grid">
-      <a class="post-card reveal" href="posts/mars-gov.html">
-        <div class="post-cover c1"><span class="glyph">⚖️</span></div>
-        <div class="post-body">
-          <div class="kdate">EMNLP 2026 · Accepted · Second author</div>
-          <h3>When multi-agent systems become a jury for government text</h3>
-          <p>How MARS-Gov uses a “tenth juror” to identify overlooked groups beyond predefined categories.</p>
-          <span class="read">Read article <span class="arrow">→</span></span>
-        </div>
-      </a>
-      <a class="post-card reveal d1" href="posts/imex-fnd.html">
-        <div class="post-cover c2"><span class="glyph">🧩</span></div>
-        <div class="post-body">
-          <div class="kdate">WISE 2026 · Accepted · Second author</div>
-          <h3>Decomposing multimodal fake news with mixture of experts</h3>
-          <p>How IMEX-FND uses five experts to make cross-modal interactions more interpretable.</p>
-          <span class="read">Read article <span class="arrow">→</span></span>
-        </div>
-      </a>
-      <a class="post-card reveal d2" href="posts/evenodd.html">
-        <div class="post-cover c3"><span class="glyph">🧮</span></div>
-        <div class="post-body">
-          <div class="kdate">2025 · Coding Theory · Storage</div>
-          <h3>EVENODD coding: fault tolerance versus efficiency</h3>
-          <p>Why can two disks of redundancy deliver strong fault tolerance through XOR operations—and what is the cost?</p>
-          <span class="read">Read article <span class="arrow">→</span></span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== NOTES ===================== -->
-<section class="section" id="musings">
-  <div class="wrap">
-    <p class="eyebrow reveal">Notes</p>
-    <h2 class="section-title reveal">A few unfinished thoughts.</h2>
-    <p class="section-lead reveal">Not always about research—just small observations on learning and life.</p>
-    <div class="musings">
-      <div class="musing reveal">
-        <div class="mtop"><span class="memoji">💡</span><span class="mdate">2026.06.10</span></div>
-        <p>The longer I do research, the more I think the hardest part is not writing code. It is forcing a vague intuition into a falsifiable question. Everything after that is engineering.</p>
-        <span class="mtag"># Research practice</span>
-      </div>
-      <div class="musing reveal d1">
-        <div class="mtop"><span class="memoji">🔧</span><span class="mdate">2026.04.02</span></div>
-        <p>Seeing FPC production firsthand made the idea of yield tangible. A seemingly minor fault-tolerance assumption in a paper becomes a real cost on a factory floor. Theory and engineering need each other.</p>
-        <span class="mtag"># Internship note</span>
-      </div>
-      <div class="musing reveal d2">
-        <div class="mtop"><span class="memoji">📚</span><span class="mdate">2026.02.18</span></div>
-        <p>Giving a multi-agent system a role that can disagree is often more useful than stacking ten more prompts. Diversity is not noise; it is another form of information.</p>
-        <span class="mtag"># Idea</span>
-      </div>
-      <div class="musing reveal d3">
-        <div class="mtop"><span class="memoji">🌙</span><span class="mdate">2026.01.05</span></div>
-        <p>When two paper deadlines collided, what carried me through was not talent but a detailed to-do list and the refusal to give up. Onward.</p>
-        <span class="mtag"># Daily note</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== LINKS ===================== -->
-<section class="section section--alt" id="friends">
-  <div class="wrap">
-    <p class="eyebrow reveal">Links</p>
-    <h2 class="section-title reveal">Places worth visiting.</h2>
-    <p class="section-lead reveal">People and sites that have inspired me.</p>
-    <div class="friend-grid">
-      <a class="friend reveal" href="https://huyifan.fun" target="_blank" rel="noopener">
-        <span class="fav" style="background:linear-gradient(135deg,#5e5ce6,#bf5af2)">H</span>
-        <span class="finfo"><span class="fname">Yifan Hu</span><span class="fdesc">Think · Create · Express</span></span>
-      </a>
-      <a class="friend reveal d1" href="#contact">
-        <span class="fav" style="background:linear-gradient(135deg,#34c759,#0a84ff)">+</span>
-        <span class="finfo"><span class="fname">Want to exchange links?</span><span class="fdesc">Email me—I’d be glad to connect.</span></span>
-      </a>
-    </div>
-    <p class="friend-note reveal">To exchange links, send me your <code>site name · short description · URL</code> by email.</p>
-  </div>
-</section>
-
-<!-- ===================== CONTACT ===================== -->
-<section class="contact" id="contact">
-  <div class="wrap">
-    <p class="aphorism reveal">“Persistence is what makes a mind adaptable.”<span class="src">— A reminder to myself</span></p>
-    <h2>Let’s build<br>something interesting.</h2>
-    <p class="lead">For research collaborations, internship opportunities, or a conversation about multi-agent and multimodal systems, feel free to reach out.</p>
-    <div class="contact-methods">
-      <a class="cmethod" href="mailto:17775808968@163.com"><span class="ic">✉️</span> 17775808968@163.com</a>
-      <a class="cmethod" href="tel:+8617775808968"><span class="ic">📱</span> +86 177 7580 8968</a>
-      <a class="cmethod" href="assets/cv.pdf" target="_blank" rel="noopener"><span class="ic">📄</span> Download CV</a>
-      <span class="cmethod"><span class="ic">📍</span> Qinhuangdao, China</span>
-    </div>
-    <div class="footer-line">
-      <span>© 2026 Wang Zijun · <a href="https://wangzijun.top">wangzijun.top</a></span>
-      <span>Research · Build · Write · Built with care</span>
-    </div>
-  </div>
-</section>
-
-<script src="main.js"></script>
+    </article>
+  </main>
 </body>
 </html>
