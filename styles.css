@@ -3,6 +3,30 @@
 .author__role { white-space: normal; margin-bottom: 1em; }
 .author__affiliation { white-space: normal !important; }
 .author__name-cn { display: inline-block; white-space: nowrap; }
+/* Match the supplied framing reference while keeping the original white background. */
+.author__avatar--formal {
+  display: block;
+  position: relative;
+  flex-shrink: 0;
+  aspect-ratio: 3501 / 4154;
+  overflow: hidden;
+  border: 1px solid #f2f3f3;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(27, 39, 51, .12);
+}
+.author__avatar--formal img {
+  position: absolute;
+  top: -3.1%;
+  left: -12.6316%;
+  width: 126.3158%;
+  max-width: none;
+  min-width: 0;
+  height: auto;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
 .last-updated { color: #555; }
 .paper-box .paper-box-image > div { max-width: 100%; }
 .paper-box .paper-box-image img { width: 100%; height: auto; }
