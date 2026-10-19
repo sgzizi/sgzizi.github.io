@@ -1,32 +1,8 @@
 /* The shared academic theme is in assets/css/academic.css.
-   Keep this file limited to profile framing, navigation, accessibility, and blog additions. */
+   Keep this file limited to navigation, accessibility, and blog additions. */
 .author__role { white-space: normal; margin-bottom: 1em; }
 .author__affiliation { white-space: normal !important; }
 .author__name-cn { display: inline-block; white-space: nowrap; }
-/* Frame the original portrait as a chest-up headshot. */
-.author__avatar {
-  display: block;
-  position: relative;
-  flex-shrink: 0;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  border: 1px solid #f2f3f3;
-  border-radius: 14px;
-  box-shadow: 0 8px 24px rgba(27, 39, 51, .12);
-}
-.author__avatar img {
-  position: absolute;
-  top: -5%;
-  left: -35%;
-  width: 170%;
-  max-width: none;
-  min-width: 0;
-  height: auto;
-  aspect-ratio: auto;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
 .last-updated { color: #555; }
 .paper-box .paper-box-image > div { max-width: 100%; }
 .paper-box .paper-box-image img { width: 100%; height: auto; }
