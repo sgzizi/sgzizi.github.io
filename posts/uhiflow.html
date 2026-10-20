@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UHIFlow: letting uncertainty choose the depth of user intent - Zijun Wang</title>
+  <meta name="description" content="How flow-based uncertainty controls residual-quantization depth and attention, and what the coupled ablations do and do not isolate.">
+  <meta name="author" content="Zijun Wang">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://wangzijun.top/posts/uhiflow.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="UHIFlow: letting uncertainty choose the depth of user intent - Zijun Wang">
+  <meta property="og:description" content="How flow-based uncertainty controls residual-quantization depth and attention, and what the coupled ablations do and do not isolate.">
+  <meta property="og:url" content="https://wangzijun.top/posts/uhiflow.html">
+  <meta property="og:image" content="https://wangzijun.top/assets/img/portrait.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/jpeg" href="../assets/img/portrait.jpg">
+  <link rel="stylesheet" href="../assets/css/academic.css">
+  <link rel="stylesheet" href="../styles.css?v=20261020-research-blog">
+  <script src="../main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="masthead">
+    <div class="masthead__inner-wrap">
+      <div class="masthead__menu">
+        <nav id="site-nav" class="greedy-nav" aria-label="Main navigation">
+          <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="navigation-links" aria-expanded="false"><span class="navicon"></span></button>
+          <ul class="visible-links" id="navigation-links">
+            <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a href="../index.html">Homepage</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#about-me">About Me</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#news">News</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#publications">Publications</a></li>
+            <li class="masthead__menu-item"><a href="../articles.html" aria-current="page">Blog</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#experience">Experience</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#education">Education</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#awards">Awards</a></li>
+            <li class="masthead__menu-item"><a href="../assets/cv.pdf">CV</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <aside class="sidebar sticky" aria-label="About Zijun Wang">
+      <div class="profile_box" itemscope itemtype="https://schema.org/Person">
+        <div class="author__avatar author__avatar--formal">
+          <img src="../assets/img/portrait.jpg" alt="Zijun Wang (王子峻)" width="175" height="208" itemprop="image">
+        </div>
+        <div class="author__content">
+          <h3 class="author__name" itemprop="name">Zijun Wang <span class="author__name-cn">(王子峻)</span></h3>
+        </div>
+        <div class="author__urls-wrapper">
+          <ul class="author__urls social-icons">
+            <li><div class="author__role">Undergraduate Student</div></li>
+            <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> Qinhuangdao, China</li>
+            <li class="author__affiliation"><i class="fas fa-fw fa-university" aria-hidden="true"></i> Northeastern University</li>
+            <li><a href="mailto:wangzj@mails.neu.edu.cn" itemprop="email"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+            <li><a href="https://github.com/sgzizi" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+            <li><a href="https://orcid.org/0009-0000-1725-4048" itemprop="sameAs"><i class="fas fa-fw fa-id-card" aria-hidden="true"></i> ORCID</a></li>
+          </ul>
+          <div class="author__urls_sm">
+            <a href="mailto:wangzj@mails.neu.edu.cn" aria-label="Email Zijun Wang"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
+            <a href="https://github.com/sgzizi" aria-label="Zijun Wang on GitHub"><i class="fab fa-fw fa-github" aria-hidden="true"></i></a>
+            <a href="https://orcid.org/0009-0000-1725-4048" aria-label="Zijun Wang on ORCID"><i class="fas fa-fw fa-id-card" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <article class="page" id="content" aria-label="Research article">
+      <div class="page__inner-wrap">
+        <div class="page__content">
+          <div class="blog-article">
+<header class="blog-article__header">
+<a class="blog-article__back" href="../articles.html">← Back to blog</a>
+<h1>UHIFlow: letting uncertainty choose the depth of user intent</h1>
+<p class="blog-list__meta">Zijun Wang · Multimodal recommendation · 3 min read</p>
+<p>How flow-based uncertainty controls residual-quantization depth and attention, and what the coupled ablations do and do not isolate.</p>
+<p class="blog-article__links"><a href="https://arxiv.org/abs/2609.29609">Read the paper</a> · <a href="../assets/papers/uhiflow.pdf">PDF</a> <span class="blog-article__venue">WISE 2026</span></p>
+</header>
+<nav class="blog-toc" aria-label="In this article">
+<p>In this article</p><ol><li><a href="#granularity">How specific should an intent be?</a></li>
+<li><a href="#mechanism">Two places where uncertainty acts</a></li>
+<li><a href="#ablation">Read the ablation as a coupled change</a></li>
+<li><a href="#calibration">Prediction quality and calibration</a></li></ol>
+</nav>
+
+<h2 id="granularity">How specific should an intent be?</h2>
+<p>A user looking through electronics may not yet know whether they want a camera or a laptop. Assigning that user a very specific intent can make a recommender confidently follow noise.</p>
+<p>Another user may have a consistent, narrow history. For them, keeping only a broad intent discards useful detail. A fixed hierarchy depth asks both users to accept the same representation budget.</p>
+<p>UHIFlow connects the depth of a user’s intent representation to an uncertainty signal derived from multimodal item features. Higher uncertainty permits an earlier stop at a coarser level.</p>
+<figure class="blog-figure">
+<a href="../assets/img/publications/uhiflow.png" aria-label="View full-size research figure"><img src="../assets/img/publications/uhiflow.png" width="1800" height="844" alt="UHIFlow architecture connecting collaborative embeddings, visual and textual flows, uncertainty-guided intent generation, and aggregation." loading="lazy"></a>
+<figcaption>Uncertainty is used downstream to control intent generation and aggregation, rather than being reported only as an auxiliary score.</figcaption>
+</figure>
+<h2 id="mechanism">Two places where uncertainty acts</h2>
+<h3>Build an item-conditioned uncertainty signal</h3>
+<p>The CUSM module learns visual and textual conditional flows, conditioned on collaborative item embeddings. A cross-modal guidance loss aligns intermediate latent representations.</p>
+<p>The paper uses the magnitude of flow log-density change as an uncertainty score. Item scores are aggregated over a user’s interaction history to produce a user-level score ς<sub>u</sub>.</p>
+<h3>Stop residual quantization sooner</h3>
+<p>Intent generation chooses a codeword at each level and subtracts it from the current residual. The remaining residual determines whether another, finer level is needed.</p>
+<div class="blog-equation">r<sub>u</sub><sup>(l)</sup> = r<sub>u</sub><sup>(l−1)</sup> − c<sub>u</sub><sup>(l)</sup><br>Stop when ‖r<sub>u</sub><sup>(l)</sup>‖₂ &lt; τ₀ ς<sub>u</sub> / l</div>
+<p>With the same residual, a larger uncertainty score makes the stopping condition easier to meet. The model can therefore avoid representing weakly supported fine detail.</p>
+<h3>Reduce the weight of fine levels</h3>
+<p>Uncertainty also enters attention over the generated levels. The attention logit includes a penalty −γlς<sub>u</sub>, which increasingly suppresses deeper levels as uncertainty grows.</p>
+<p>The stopping rule controls which levels exist. The attention penalty controls how much the retained levels contribute. These are separate ways for the same uncertainty signal to affect the recommendation.</p>
+<p class="blog-source">Flow construction, stopping rule, and attention: <a href="../assets/papers/uhiflow.pdf#page=5">Sections 4.2–4.4</a>.</p>
+
+<h2 id="ablation">Read the ablation as a coupled change</h2>
+<div class="blog-table" role="region" aria-label="Recall@20 from the component ablations in Table 3." tabindex="0">
+<table><caption>Recall@20 from the component ablations in Table 3.</caption><thead><tr><th scope="col">Variant</th><th scope="col">Amazon-Baby</th><th scope="col">Amazon-Sports</th><th scope="col">TikTok</th></tr></thead><tbody><tr><th scope="row">Full UHIFlow</th><td><strong>0.1079</strong></td><td><strong>0.1171</strong></td><td><strong>0.1162</strong></td></tr>
+<tr><th scope="row">Without cross-modal guidance</th><td>0.1060</td><td>0.1146</td><td>0.1119</td></tr>
+<tr><th scope="row">Without CUSM; fixed depth 2</th><td>0.1015</td><td>0.1092</td><td>0.1093</td></tr>
+<tr><th scope="row">Flat intent codebook</th><td>0.1040</td><td>0.1127</td><td>0.1106</td></tr></tbody></table>
+</div>
+<p>Removing CUSM lowers Recall@20, but this variant also switches to a fixed depth of two because user uncertainty is unavailable. It changes both the uncertainty estimate and the hierarchy policy.</p>
+<p>That comparison supports the combined design. It cannot assign the entire gain to the quality of the flow uncertainty estimate alone. The cross-modal-guidance removal makes a narrower intervention.</p>
+<p>A cleaner separation would compare different uncertainty scores with the same hierarchy controller, then vary the controller while holding the score fixed. That would distinguish score quality from how the model uses it.</p>
+<p class="blog-source">Ablation definitions and results: <a href="../assets/papers/uhiflow.pdf#page=10">Section 5.3 and Table 3</a>.</p>
+
+<h2 id="calibration">Prediction quality and calibration</h2>
+<p>Higher Recall@20 establishes a ranking benefit under the tested protocol. It does not establish that the uncertainty score is calibrated to a user’s actual uncertainty or to the probability of a recommendation error.</p>
+<p>I would evaluate that separately by grouping users by predicted uncertainty, comparing error rates across groups, and checking whether coarse representations help the groups identified as uncertain.</p>
+<p>History length is an important control in that analysis. A score correlated with sparse histories may still be useful, but the comparison should establish what it adds beyond simply knowing how much feedback is available.</p>
+
+<footer class="blog-article__footer">
+<h2>Related notes</h2><ul><li><a href="imex-fnd.html">IMEX-FND: learning what text and images contribute to a verdict</a></li>
+<li><a href="motif.html">MOTIF: using LLM reasoning to change a cold item’s neighbours</a></li></ul>
+<a href="../articles.html">← All research notes</a>
+</footer>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

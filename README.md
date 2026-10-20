@@ -3,7 +3,7 @@
 Static GitHub Pages website at <https://wangzijun.top/>.
 
 - `index.html`: biography, news, publications, experience, education, and awards.
-- `articles.html` and `posts/`: blog archive and existing research notes.
+- `articles.html` and `posts/`: blog archive and six full research notes, with source links, figures, and experimental comparisons.
 - `styles.css`: small responsive, accessibility, and blog additions.
 - `main.js`: accessible mobile navigation. Content also works without JavaScript.
 - `assets/css/academic.css`: the same academic theme used by

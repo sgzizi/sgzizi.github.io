@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOTIF: using LLM reasoning to change a cold item’s neighbours - Zijun Wang</title>
+  <meta name="description" content="Why MOTIF uses motivation semantics to reconstruct graph edges, how direct fusion compares, and where leakage and false semantic links can enter.">
+  <meta name="author" content="Zijun Wang">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://wangzijun.top/posts/motif.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MOTIF: using LLM reasoning to change a cold item’s neighbours - Zijun Wang">
+  <meta property="og:description" content="Why MOTIF uses motivation semantics to reconstruct graph edges, how direct fusion compares, and where leakage and false semantic links can enter.">
+  <meta property="og:url" content="https://wangzijun.top/posts/motif.html">
+  <meta property="og:image" content="https://wangzijun.top/assets/img/portrait.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/jpeg" href="../assets/img/portrait.jpg">
+  <link rel="stylesheet" href="../assets/css/academic.css">
+  <link rel="stylesheet" href="../styles.css?v=20261020-research-blog">
+  <script src="../main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="masthead">
+    <div class="masthead__inner-wrap">
+      <div class="masthead__menu">
+        <nav id="site-nav" class="greedy-nav" aria-label="Main navigation">
+          <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="navigation-links" aria-expanded="false"><span class="navicon"></span></button>
+          <ul class="visible-links" id="navigation-links">
+            <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a href="../index.html">Homepage</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#about-me">About Me</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#news">News</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#publications">Publications</a></li>
+            <li class="masthead__menu-item"><a href="../articles.html" aria-current="page">Blog</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#experience">Experience</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#education">Education</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#awards">Awards</a></li>
+            <li class="masthead__menu-item"><a href="../assets/cv.pdf">CV</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <aside class="sidebar sticky" aria-label="About Zijun Wang">
+      <div class="profile_box" itemscope itemtype="https://schema.org/Person">
+        <div class="author__avatar author__avatar--formal">
+          <img src="../assets/img/portrait.jpg" alt="Zijun Wang (王子峻)" width="175" height="208" itemprop="image">
+        </div>
+        <div class="author__content">
+          <h3 class="author__name" itemprop="name">Zijun Wang <span class="author__name-cn">(王子峻)</span></h3>
+        </div>
+        <div class="author__urls-wrapper">
+          <ul class="author__urls social-icons">
+            <li><div class="author__role">Undergraduate Student</div></li>
+            <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> Qinhuangdao, China</li>
+            <li class="author__affiliation"><i class="fas fa-fw fa-university" aria-hidden="true"></i> Northeastern University</li>
+            <li><a href="mailto:wangzj@mails.neu.edu.cn" itemprop="email"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+            <li><a href="https://github.com/sgzizi" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+            <li><a href="https://orcid.org/0009-0000-1725-4048" itemprop="sameAs"><i class="fas fa-fw fa-id-card" aria-hidden="true"></i> ORCID</a></li>
+          </ul>
+          <div class="author__urls_sm">
+            <a href="mailto:wangzj@mails.neu.edu.cn" aria-label="Email Zijun Wang"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
+            <a href="https://github.com/sgzizi" aria-label="Zijun Wang on GitHub"><i class="fab fa-fw fa-github" aria-hidden="true"></i></a>
+            <a href="https://orcid.org/0009-0000-1725-4048" aria-label="Zijun Wang on ORCID"><i class="fas fa-fw fa-id-card" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <article class="page" id="content" aria-label="Research article">
+      <div class="page__inner-wrap">
+        <div class="page__content">
+          <div class="blog-article">
+<header class="blog-article__header">
+<a class="blog-article__back" href="../articles.html">← Back to blog</a>
+<h1>MOTIF: using LLM reasoning to change a cold item’s neighbours</h1>
+<p class="blog-list__meta">Zijun Wang · Cold-start recommendation · 3 min read</p>
+<p>Why MOTIF uses motivation semantics to reconstruct graph edges, how direct fusion compares, and where leakage and false semantic links can enter.</p>
+<p class="blog-article__links"><a href="https://arxiv.org/abs/2608.25381">Read the paper</a> · <a href="../assets/papers/motif.pdf">PDF</a> <span class="blog-article__venue">WISE 2026</span></p>
+</header>
+<nav class="blog-toc" aria-label="In this article">
+<p>In this article</p><ol><li><a href="#cold-item">An item with content but no graph history</a></li>
+<li><a href="#topology">From motivation to an edge</a></li>
+<li><a href="#alternative">The direct-fusion alternative</a></li>
+<li><a href="#protocol">What the cold-start result covers</a></li></ol>
+</nav>
+
+<h2 id="cold-item">An item with content but no graph history</h2>
+<p>A new item may have a useful description and image while remaining poorly connected to the interaction graph. Good content features alone do not guarantee that useful collaborative information can reach it.</p>
+<p>MOTIF uses LLM-derived motivation semantics to reconstruct item connections. The design question is where to introduce that information: directly into a prediction vector, or into the topology used for propagation.</p>
+<figure class="blog-figure">
+<a href="../assets/img/publications/motif.png" aria-label="View full-size research figure"><img src="../assets/img/publications/motif.png" width="1800" height="1013" alt="MOTIF pipeline using item and user motivation reasoning, graph reconstruction, contrastive learning, and semantic-structural alignment." loading="lazy"></a>
+<figcaption>The model connects motivation semantics to graph structure. LLM reasoning and graph construction are performed offline.</figcaption>
+</figure>
+<h2 id="topology">From motivation to an edge</h2>
+<p>The model generates item motivation descriptions from item-side content. User motivation descriptions use only training-visible interaction histories.</p>
+<p>Candidate item neighbours are retrieved using a mixture of motivation-semantic similarity and raw multimodal similarity. An offline LLM relation prior then scores functional relationships within that candidate set.</p>
+<div class="blog-equation">a<sub>ij</sub> = α sim(s<sub>i</sub>, s<sub>j</sub>) + (1 − α) sim(m<sub>i</sub>, m<sub>j</sub>)<br>w<sub>ij</sub> = a<sub>ij</sub> + β r<sub>ij</sub></div>
+<p>Each item keeps its highest-scoring neighbours. These weighted item edges are combined with the user–item interaction graph for LightGCN-style propagation.</p>
+<p>The candidate restriction matters computationally: the LLM does not need to score every pair of items. It also creates a retrieval bottleneck, since a useful pair outside the candidate set cannot be recovered by the relation prior.</p>
+<p class="blog-source">Motivation reasoning and graph construction: <a href="../assets/papers/motif.pdf#page=3">Sections 3.3–3.4</a>.</p>
+
+<h2 id="alternative">The direct-fusion alternative</h2>
+<p>One simpler choice is to concatenate LLM semantic embeddings with graph embeddings and predict from that combination. The paper tests this as Direct-Fusion, alongside a graph built from similarity alone.</p>
+<div class="blog-table" role="region" aria-label="Recall@20 for selected variants, averaged over five seeds. Table 5." tabindex="0">
+<table><caption>Recall@20 for selected variants, averaged over five seeds. Table 5.</caption><thead><tr><th scope="col">Variant</th><th scope="col">Amazon-Baby</th><th scope="col">Amazon-Sports</th><th scope="col">MicroLens</th></tr></thead><tbody><tr><th scope="row">MOTIF</th><td><strong>0.1083</strong></td><td><strong>0.1146</strong></td><td><strong>0.0938</strong></td></tr>
+<tr><th scope="row">Without graph reconstruction</th><td>0.1006</td><td>0.1028</td><td>0.0875</td></tr>
+<tr><th scope="row">Similarity-based graph</th><td>0.1030</td><td>0.1099</td><td>0.0902</td></tr>
+<tr><th scope="row">Direct semantic fusion</th><td>0.1021</td><td>0.1093</td><td>0.0907</td></tr></tbody></table>
+</div>
+<p>The full model outperforms both alternatives on all three datasets. That supports using the semantic signal to reshape propagation rather than relying on direct fusion in this implementation.</p>
+<p>The distinction is mechanistic. Direct fusion changes what the final predictor sees. Reconstruction changes which items can exchange information throughout graph propagation.</p>
+<p>This is a comparison of implemented alternatives, not evidence that every graph reconstruction method is better than every semantic fusion method. The graph and training objectives are still specific design choices.</p>
+<p class="blog-source">Ablations: <a href="../assets/papers/motif.pdf#page=11">Table 5</a>.</p>
+
+<h2 id="protocol">What the cold-start result covers</h2>
+<p>The paper defines extreme-cold users as having one or two visible training interactions. Cold-item evaluation masks item training interactions while retaining item content; the masked interactions are held for validation and testing.</p>
+<p>On Amazon-Baby cold items, MOTIF obtains 0.0613 Recall@20 versus 0.0488 for LMMRec, about a 25.6% relative gain. These are cold-subset results, distinct from the overall scores above.</p>
+<p>The masking protocol is reproducible, but it does not reproduce every aspect of an item arriving after deployment. A temporal evaluation would additionally test changing catalogues and the age of generated motivation descriptions.</p>
+<p>Semantic plausibility is another limit. Two items can share a usage description without serving the same users. A mistaken edge can spread an unhelpful signal through several propagation layers.</p>
+<p>I would inspect edge quality alongside ranking accuracy, especially for the coldest items. Comparing candidates, selected edges, and propagation effects would help identify whether an error begins in retrieval or relation reasoning.</p>
+<p>Leakage checks belong at each generation input: user reasoning must exclude held-out interactions, and item reasoning must use only the item-side information allowed by the evaluation.</p>
+<p class="blog-source">Protocol and cold-subset results: <a href="../assets/papers/motif.pdf#page=8">Section 4.1</a> and <a href="../assets/papers/motif.pdf#page=10">Table 4</a>.</p>
+
+<footer class="blog-article__footer">
+<h2>Related notes</h2><ul><li><a href="uhiflow.html">UHIFlow: letting uncertainty choose the depth of user intent</a></li>
+<li><a href="imex-fnd.html">IMEX-FND: learning what text and images contribute to a verdict</a></li></ul>
+<a href="../articles.html">← All research notes</a>
+</footer>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When can a random polynomial put a root in a short interval? - Zijun Wang</title>
+  <meta name="description" content="A worked explanation of root anti-concentration: dependence counterexamples, ordered-root densities, a short proof, and singular coefficient laws.">
+  <meta name="author" content="Zijun Wang">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://wangzijun.top/posts/sharp-root.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="When can a random polynomial put a root in a short interval? - Zijun Wang">
+  <meta property="og:description" content="A worked explanation of root anti-concentration: dependence counterexamples, ordered-root densities, a short proof, and singular coefficient laws.">
+  <meta property="og:url" content="https://wangzijun.top/posts/sharp-root.html">
+  <meta property="og:image" content="https://wangzijun.top/assets/img/portrait.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/jpeg" href="../assets/img/portrait.jpg">
+  <link rel="stylesheet" href="../assets/css/academic.css">
+  <link rel="stylesheet" href="../styles.css?v=20261020-research-blog">
+  <script src="../main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="masthead">
+    <div class="masthead__inner-wrap">
+      <div class="masthead__menu">
+        <nav id="site-nav" class="greedy-nav" aria-label="Main navigation">
+          <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="navigation-links" aria-expanded="false"><span class="navicon"></span></button>
+          <ul class="visible-links" id="navigation-links">
+            <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a href="../index.html">Homepage</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#about-me">About Me</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#news">News</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#publications">Publications</a></li>
+            <li class="masthead__menu-item"><a href="../articles.html" aria-current="page">Blog</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#experience">Experience</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#education">Education</a></li>
+            <li class="masthead__menu-item"><a href="../index.html#awards">Awards</a></li>
+            <li class="masthead__menu-item"><a href="../assets/cv.pdf">CV</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <aside class="sidebar sticky" aria-label="About Zijun Wang">
+      <div class="profile_box" itemscope itemtype="https://schema.org/Person">
+        <div class="author__avatar author__avatar--formal">
+          <img src="../assets/img/portrait.jpg" alt="Zijun Wang (王子峻)" width="175" height="208" itemprop="image">
+        </div>
+        <div class="author__content">
+          <h3 class="author__name" itemprop="name">Zijun Wang <span class="author__name-cn">(王子峻)</span></h3>
+        </div>
+        <div class="author__urls-wrapper">
+          <ul class="author__urls social-icons">
+            <li><div class="author__role">Undergraduate Student</div></li>
+            <li><i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> Qinhuangdao, China</li>
+            <li class="author__affiliation"><i class="fas fa-fw fa-university" aria-hidden="true"></i> Northeastern University</li>
+            <li><a href="mailto:wangzj@mails.neu.edu.cn" itemprop="email"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+            <li><a href="https://github.com/sgzizi" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+            <li><a href="https://orcid.org/0009-0000-1725-4048" itemprop="sameAs"><i class="fas fa-fw fa-id-card" aria-hidden="true"></i> ORCID</a></li>
+          </ul>
+          <div class="author__urls_sm">
+            <a href="mailto:wangzj@mails.neu.edu.cn" aria-label="Email Zijun Wang"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i></a>
+            <a href="https://github.com/sgzizi" aria-label="Zijun Wang on GitHub"><i class="fab fa-fw fa-github" aria-hidden="true"></i></a>
+            <a href="https://orcid.org/0009-0000-1725-4048" aria-label="Zijun Wang on ORCID"><i class="fas fa-fw fa-id-card" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <article class="page" id="content" aria-label="Research article">
+      <div class="page__inner-wrap">
+        <div class="page__content">
+          <div class="blog-article">
+<header class="blog-article__header">
+<a class="blog-article__back" href="../articles.html">← Back to blog</a>
+<h1>When can a random polynomial put a root in a short interval?</h1>
+<p class="blog-list__meta">Zijun Wang · Learning theory · 4 min read</p>
+<p>A worked explanation of root anti-concentration: dependence counterexamples, ordered-root densities, a short proof, and singular coefficient laws.</p>
+<p class="blog-article__links"><a href="https://arxiv.org/abs/2608.01670">Read the paper</a> <span class="blog-article__venue">Preprint</span></p>
+</header>
+<nav class="blog-toc" aria-label="In this article">
+<p>In this article</p><ol><li><a href="#question">A local probability question</a></li>
+<li><a href="#dependence">Why coefficient marginals are insufficient</a></li>
+<li><a href="#criterion">The ordered-root criterion</a></li>
+<li><a href="#example">A singular law that still works</a></li>
+<li><a href="#geometry">Beyond polynomials</a></li></ol>
+</nav>
+
+<h2 id="question">A local probability question</h2>
+<p>Suppose an algorithm changes its behaviour whenever a polynomial in a tuning parameter becomes zero. Even a low-degree polynomial can cause unstable behaviour if its random roots concentrate in a very short interval.</p>
+<p>Our preprint studies the probability of at least one real root falling in an interval I. For a monic degree-d polynomial with coefficient law μ, define the interval-hitting constant:</p>
+<div class="blog-equation" aria-label="The interval-hitting constant is the supremum over intervals of the probability of a root hit divided by interval length">c<sub>μ</sub>(Θ) = sup<sub>I ⊆ Θ</sub> Pr{P has a root in I} / |I|</div>
+<p>The supremum is over bounded, nondegenerate closed intervals. A finite constant means that shrinking an interval forces its hit probability to shrink at least linearly in its length.</p>
+<p>The distinction between the number of roots and their location is essential. Degree bounds how many roots a polynomial can have. It does not stop one of those roots from being deterministic.</p>
+
+<h2 id="dependence">Why coefficient marginals are insufficient</h2>
+<p>Let U be uniform on [−1, 1], and consider:</p>
+<div class="blog-equation">P<sub>U</sub>(x) = x² + Ux − 1 − U = (x − 1)(x + 1 + U)</div>
+<p>Both random coefficients have bounded marginal densities. Nevertheless, x = 1 is a root for every draw. Any interval containing 1 has hit probability one, however short it is.</p>
+<p>The failure comes from dependence: the coefficients move together in a way that pins a root. Separate histograms of the coefficients would miss that constraint.</p>
+<p>This example motivates a condition stated directly in terms of where roots land. It also explains why replacing a joint-density assumption with marginal-density bounds is unsafe.</p>
+<p class="blog-source">Counterexample and coefficient-space conditions: <a href="https://arxiv.org/html/2608.01670v1#S3.SS1">Section 3.1</a>.</p>
+
+<h2 id="criterion">The ordered-root criterion</h2>
+<p>For each polynomial, list its distinct real roots in Θ in increasing order. The kth root may not exist, so its law is a subprobability measure: it records a location only on draws with at least k roots.</p>
+<p>Let M be the largest essential density bound among those d ordered-root laws. Theorem 3.2 proves:</p>
+<div class="blog-equation" aria-label="M is at most c mu, which is at most d times M">M ≤ c<sub>μ</sub>(Θ) ≤ dM</div>
+<h3>The upper bound is a union bound</h3>
+<p>If some root hits I, at least one ordered root hits I. Each ordered-root probability is at most M|I|. Summing at most d such probabilities gives:</p>
+<div class="blog-equation">Pr{some root ∈ I} ≤ Σ<sub>k=1…d</sub> Pr{kth root exists and lies in I} ≤ dM|I|</div>
+<h3>The converse uses event containment</h3>
+<p>The event that a particular ordered root lies in I is contained in the event that some root lies in I. A finite hitting constant therefore bounds each ordered-root measure on every interval.</p>
+<p>Extending this interval domination to Borel sets yields absolute continuity and a bounded density. That is the measure-theoretic step behind the converse; the event inclusion alone is only the beginning.</p>
+<p>The result holds even when the coefficient law is singular. Proposition 3.3 also shows that the factor d is sharp in general, including among laws with bounded coefficient densities.</p>
+<p class="blog-source">Precise statement, measurability, and sharpness: <a href="https://arxiv.org/html/2608.01670v1#S3">Theorem 3.2 and Proposition 3.3</a>.</p>
+
+<h2 id="example">A singular law that still works</h2>
+<p>For an illustrative calculation on the real line, fix distinct numbers b₁ &lt; ⋯ &lt; b<sub>d</sub>, take d ≥ 2, and draw a shared offset Z uniformly on [−a, a], with a &gt; 0.</p>
+<div class="blog-equation">P<sub>Z</sub>(x) = ∏<sub>j=1…d</sub> (x − b<sub>j</sub> − Z)</div>
+<p>Every root is b<sub>j</sub> + Z, with density at most 1/(2a). Thus the hit probability is at most min{1, d|I|/(2a)}.</p>
+<p>Yet the d-dimensional coefficient vector is generated by one scalar. Its law lies on a curve and has no full-dimensional Lebesgue density. The root bound survives because the roots themselves move continuously with the offset.</p>
+<p>Compare this with the previous example. Both have strongly dependent coefficients. One pins a root; the other translates all roots. Singularity of the coefficient law does not settle the anti-concentration question.</p>
+<p>This calculation illustrates the rigid-translation mechanism used in the paper’s common-offset polynomial-kernel application. The application also needs a separate boundary-complexity argument to obtain a regret bound.</p>
+
+<h2 id="geometry">Beyond polynomials</h2>
+<p>The other part of the paper considers equations of the form ⟨α, F(x)⟩ = 0. Here F can be a nonpolynomial feature curve, so degree alone is no longer the right language.</p>
+<p>For a nonzero feature curve, multiplying F(x) by a nonzero scalar does not change the zero condition. The direction of F is therefore the relevant geometric object, leading to a projective formulation.</p>
+<p>The coefficient-body theorem expresses the worst-case hitting constant through section-averaged projective incidence. For cube-supported coefficients, the resulting comparison avoids the previous √N dimension loss.</p>
+<p>This geometric result and the ordered-root criterion address different coefficient models. The latter is particularly useful when a structured random process produces a singular law, as in the shared-offset example.</p>
+<p>For an application, the remaining work is to identify the actual transition equations, check the distribution assumptions, and control how many boundaries can occur. A root bound is one ingredient of the learning guarantee.</p>
+<p class="blog-source">Geometry: <a href="https://arxiv.org/html/2608.01670v1#S2">Theorem 2.2 and Corollary 2.3</a>. Graph-learning applications: <a href="https://arxiv.org/html/2608.01670v1#S5">Section 5</a>.</p>
+
+<footer class="blog-article__footer">
+<h2>Related notes</h2><ul><li><a href="uhiflow.html">UHIFlow: letting uncertainty choose the depth of user intent</a></li>
+<li><a href="evenodd.html">EVENODD: what a recovery-time benchmark needs to check</a></li></ul>
+<a href="../articles.html">← All research notes</a>
+</footer>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

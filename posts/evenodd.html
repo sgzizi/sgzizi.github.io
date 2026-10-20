@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EVENODD Coding: Fault Tolerance Versus Efficiency - Zijun Wang (王子峻)</title>
-  <meta name="description" content="A note on EVENODD coding, double-disk fault tolerance, and the trade-off between inexpensive XOR operations and recovery efficiency.">
+  <title>EVENODD: what a recovery-time benchmark needs to check - Zijun Wang</title>
+  <meta name="description" content="A technical note on double-disk erasure recovery, the rank condition behind XOR parity, and fair comparisons of correctness, latency, and I/O.">
   <meta name="author" content="Zijun Wang">
   <meta name="theme-color" content="#ffffff">
   <link rel="canonical" href="https://wangzijun.top/posts/evenodd.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="EVENODD Coding: Fault Tolerance Versus Efficiency - Zijun Wang (王子峻)">
-  <meta property="og:description" content="A note on EVENODD coding, double-disk fault tolerance, and the trade-off between inexpensive XOR operations and recovery efficiency.">
+  <meta property="og:title" content="EVENODD: what a recovery-time benchmark needs to check - Zijun Wang">
+  <meta property="og:description" content="A technical note on double-disk erasure recovery, the rank condition behind XOR parity, and fair comparisons of correctness, latency, and I/O.">
   <meta property="og:url" content="https://wangzijun.top/posts/evenodd.html">
   <meta property="og:image" content="https://wangzijun.top/assets/img/portrait.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/jpeg" href="../assets/img/portrait.jpg">
   <link rel="stylesheet" href="../assets/css/academic.css">
-  <link rel="stylesheet" href="../styles.css?v=20261019-white-headshot-v4">
+  <link rel="stylesheet" href="../styles.css?v=20261020-research-blog">
   <script src="../main.js" defer></script>
 </head>
 <body>
@@ -69,41 +69,64 @@
       </div>
     </aside>
 
-    <article class="page" id="content" aria-label="Blog">
+    <article class="page" id="content" aria-label="Research article">
       <div class="page__inner-wrap">
         <div class="page__content">
           <div class="blog-article">
-            <header class="blog-article__header">
-              <a class="blog-article__back" href="../articles.html">← Back to blog</a>
-              <h1>EVENODD Coding: Fault Tolerance Versus Efficiency</h1>
-              <p class="blog-list__meta">Zijun Wang · 2025 · 7 min read</p>
-              <p>Cheap XOR operations can recover data after two disk failures. It sounds like magic—but every elegant design has a cost.</p>
-            </header>
+<header class="blog-article__header">
+<a class="blog-article__back" href="../articles.html">← Back to blog</a>
+<h1>EVENODD: what a recovery-time benchmark needs to check</h1>
+<p class="blog-list__meta">Zijun Wang · Coding theory · 3 min read</p>
+<p>A technical note on double-disk erasure recovery, the rank condition behind XOR parity, and fair comparisons of correctness, latency, and I/O.</p>
+<p class="blog-article__links"><a href="https://doi.org/10.61173/ww1ryv48">Read the paper</a> <span class="blog-article__venue">Technical note</span></p>
+</header>
+<nav class="blog-toc" aria-label="In this article">
+<p>In this article</p><ol><li><a href="#guarantee">Start with the recovery guarantee</a></li>
+<li><a href="#constraints">Why a second parity column matters</a></li>
+<li><a href="#benchmark">Measure correct recovery before speed</a></li>
+<li><a href="#role">My work on parity computation</a></li></ol>
+</nav>
 
-<p class="lead-para">Drives fail. In a storage array with tens or hundreds of disks, the question is not whether a drive will fail, but when. Fault-tolerant codes are the system’s insurance policy, and EVENODD is an especially elegant example.</p>
-<p>At the IHUB Research Program, I worked with <strong>Prof. Lara Dolecek</strong> to study parity computation, error correction, and fault tolerance in EVENODD codes. Using MATLAB simulations, I compared the complexity and efficiency of different parity-calculation approaches under multi-disk-failure scenarios.</p>
-<h2>The need for double-disk tolerance</h2>
-<p>RAID-5 can recover from a single disk failure with one parity block computed by XOR. Large arrays, however, need more protection: two concurrent disk failures are no longer negligible. Reed–Solomon codes can address this case, but finite-field multiplication adds computational overhead. <strong>EVENODD achieves double-disk fault tolerance using XOR alone.</strong></p>
-<h2>The key idea</h2>
-<p>EVENODD adds two parity columns to a data array:</p>
-<ul><li><strong>Row parity</strong> uses XOR across rows, similar to RAID-5.</li><li><strong>Diagonal parity</strong> uses XOR along diagonals with a global adjuster.</li></ul>
-<p>These two independent sets of constraints make it possible to locate and recover any two lost columns.</p>
-<pre><code>// Row parity:      P[i] = D[i,0] XOR D[i,1] XOR ... XOR D[i,m-1]
-// Diagonal parity: Q[k] = S XOR (XOR of D[i,j] where (i + j) mod p == k)
-// S is a global adjuster derived from diagonal sums.
-//
-// Two-column recovery combines row and diagonal constraints
-// through diagonal back-substitution using XOR only.</code></pre>
-<div class="callout"><span class="ci">🧮</span><p><b>Core idea:</b> use two orthogonal sets of XOR constraints—rows and diagonals—to replace finite-field multiplication with inexpensive XOR operations.</p></div>
-<h2>Where the cost moves</h2>
-<p>EVENODD saves multiplication, but the cost reappears elsewhere:</p>
-<ul><li><strong>Global dependency.</strong> The diagonal adjuster depends on the entire array.</li><li><strong>Chained recovery.</strong> Reconstructing two lost columns follows diagonal dependencies that are harder to parallelise.</li><li><strong>Parameter constraints.</strong> The construction imposes prime-related restrictions on array dimensions.</li></ul>
-<h2>What I measured</h2>
-<p>I built simulations that compared parity-calculation schemes on the same scale, measuring system complexity and execution efficiency during multi-node and multi-disk recovery. The useful question is not only “Can we recover the data?” but also “How quickly, and at what cost?”</p>
-<blockquote><p>There is no universally best fault-tolerant code—only a design that is best suited to a particular failure model and hardware constraint.</p></blockquote>
-<div class="callout"><span class="ci">📄</span><p>This article accompanies the published preprint <i>Advanced Parity Calculation Techniques in EVENODD Coding</i>. <a href="https://doi.org/10.61173/ww1ryv48" target="_blank" rel="noopener">DOI: 10.61173/ww1ryv48 ↗</a></p></div>
+<h2 id="guarantee">Start with the recovery guarantee</h2>
+<p>Suppose a decoder returns quickly after three disks fail. Before comparing its latency with another decoder, we need to establish whether it recovered the missing data at all.</p>
+<p>Classical EVENODD is a double-erasure array code. It adds two redundant columns and uses XOR-based row and diagonal parity to recover any two erased columns under the construction’s assumptions.</p>
+<p>The guarantee concerns known erasure locations. It should not be silently extended to arbitrary numbers of failed columns or to unknown corruption, which changes what the decoder must infer.</p>
+<p class="blog-source">The original construction: <a href="https://authors.library.caltech.edu/records/4azcy-f4q81">Blaum, Brady, Bruck, and Menon, 1995</a>.</p>
 
-            <footer class="blog-article__footer"><a href="../articles.html">← Back to blog</a></footer>
+<h2 id="constraints">Why a second parity column matters</h2>
+<p>With one missing value in a row, XOR parity gives a direct solution: XOR the surviving values with the stored row parity.</p>
+<div class="blog-equation">D<sub>missing</sub> = P<sub>row</sub> ⊕ D₁ ⊕ D₂ ⊕ ⋯</div>
+<p>With two missing values, the same equation determines only their XOR. Many pairs produce that value. The diagonal constraints supply additional equations across rows.</p>
+<p>EVENODD’s diagonal construction includes an adjustment term; it is not simply a second copy of row parity with a different traversal order. The structure must make the erased variables uniquely recoverable.</p>
+<p>At bit level, recovery can be viewed as a linear system over GF(2). For an erased-variable vector e, surviving data determine a right-hand side b:</p>
+<div class="blog-equation">A<sub>E</sub>e = b &nbsp; over GF(2)</div>
+<p>Unique recovery requires the columns of A<sub>E</sub> to be linearly independent. Counting inexpensive operations says little about whether that condition holds for the failure pattern being tested.</p>
+
+<h2 id="benchmark">Measure correct recovery before speed</h2>
+<p>A useful comparison fixes the data size, redundancy budget, and erasure pattern. Otherwise, a method with more redundancy or less missing data may appear faster for an unrelated reason.</p>
+<p>I would structure a benchmark around the following checks:</p>
+<ol>
+<li>Encode the same source data and record the amount of redundant storage.</li>
+<li>Erase a specified set of columns, including every single- and double-column pattern for the chosen array size.</li>
+<li>Decode and compare every recovered bit with the original data.</li>
+<li>Report latency and bytes read for successful recovery, alongside failed or unrecoverable cases.</li>
+<li>Separate encoding, update, and reconstruction costs instead of collapsing them into one runtime.</li>
+</ol>
+<p>For a toy array, exhaustive input and erasure checks can expose indexing mistakes. Larger arrays need randomized payloads, repeated measurements, and explicit reporting of the failure patterns sampled.</p>
+<p>Tests beyond two erased columns can be useful stress tests. Their outcomes need their own conditions; they cannot establish a general recovery guarantee beyond the redundancy budget.</p>
+<p>CPU operations and data movement should also be recorded separately. Fewer XORs need not yield less I/O, and the bottleneck can change with block size and the storage system.</p>
+
+<h2 id="role">My work on parity computation</h2>
+<p>My earlier work examined parity-calculation approaches and their recovery cost in storage-failure settings. I analysed the parity and reconstruction mechanisms and used simulations to compare complexity and execution efficiency.</p>
+<p>The associated article compares XOR-based, Reed–Solomon, and matrix-based approaches. This note examines that comparison: correctness conditions and redundancy must be established before comparing timings.</p>
+<p>For future implementations, I would keep the correctness check outside the timed region while requiring every timed output to pass it. Unrecoverable cases should be recorded as such, rather than being rewarded for returning quickly.</p>
+<p class="blog-source">Associated article: <a href="https://doi.org/10.61173/ww1ryv48">Advanced Parity Calculation Techniques in EVENODD Coding</a>. The benchmark procedure above is a proposed evaluation protocol, not a new set of measured results.</p>
+
+<footer class="blog-article__footer">
+<h2>Related notes</h2><ul><li><a href="sharp-root.html">When can a random polynomial put a root in a short interval?</a></li>
+<li><a href="mars-gov.html">MARS-Gov: deciding when a government sentence needs intervention</a></li></ul>
+<a href="../articles.html">← All research notes</a>
+</footer>
           </div>
         </div>
       </div>

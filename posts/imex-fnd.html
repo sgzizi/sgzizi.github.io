@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Decomposing Multimodal Fake News with Mixture of Experts - Zijun Wang (王子峻)</title>
-  <meta name="description" content="A research note on IMEX-FND, an interaction-aware mixture-of-experts framework for multimodal fake-news detection.">
+  <title>IMEX-FND: learning what text and images contribute to a verdict - Zijun Wang</title>
+  <meta name="description" content="The route-then-decompose design behind IMEX-FND: modality replacement objectives, conflict-subset results, and the limits of expert-weight explanations.">
   <meta name="author" content="Zijun Wang">
   <meta name="theme-color" content="#ffffff">
   <link rel="canonical" href="https://wangzijun.top/posts/imex-fnd.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Decomposing Multimodal Fake News with Mixture of Experts - Zijun Wang (王子峻)">
-  <meta property="og:description" content="A research note on IMEX-FND, an interaction-aware mixture-of-experts framework for multimodal fake-news detection.">
+  <meta property="og:title" content="IMEX-FND: learning what text and images contribute to a verdict - Zijun Wang">
+  <meta property="og:description" content="The route-then-decompose design behind IMEX-FND: modality replacement objectives, conflict-subset results, and the limits of expert-weight explanations.">
   <meta property="og:url" content="https://wangzijun.top/posts/imex-fnd.html">
   <meta property="og:image" content="https://wangzijun.top/assets/img/portrait.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/jpeg" href="../assets/img/portrait.jpg">
   <link rel="stylesheet" href="../assets/css/academic.css">
-  <link rel="stylesheet" href="../styles.css?v=20261019-white-headshot-v4">
+  <link rel="stylesheet" href="../styles.css?v=20261020-research-blog">
   <script src="../main.js" defer></script>
 </head>
 <body>
@@ -69,36 +69,107 @@
       </div>
     </aside>
 
-    <article class="page" id="content" aria-label="Blog">
+    <article class="page" id="content" aria-label="Research article">
       <div class="page__inner-wrap">
         <div class="page__content">
           <div class="blog-article">
-            <header class="blog-article__header">
-              <a class="blog-article__back" href="../articles.html">← Back to blog</a>
-              <h1>Decomposing Multimodal Fake News with Mixture of Experts</h1>
-              <p class="blog-list__meta">Zijun Wang · Second author · 2026 · 9 min read</p>
-              <p>When a news item’s text and image tell different stories, the important signal may lie in their relationship. Can a model make that relationship visible?</p>
-            </header>
+<header class="blog-article__header">
+<a class="blog-article__back" href="../articles.html">← Back to blog</a>
+<h1>IMEX-FND: learning what text and images contribute to a verdict</h1>
+<p class="blog-list__meta">Zijun Wang · Multimodal learning · 7 min read</p>
+<p>The route-then-decompose design behind IMEX-FND: modality replacement objectives, conflict-subset results, and the limits of expert-weight explanations.</p>
+<p class="blog-article__links"><a href="https://arxiv.org/abs/2609.29610">Read the paper</a> · <a href="../assets/papers/imex-fnd.pdf">PDF</a> <span class="blog-article__venue">WISE 2026</span></p>
+</header>
+<nav class="blog-toc" aria-label="In this article">
+<p>In this article</p><ol><li><a href="#problem">One image, several possible roles</a></li>
+<li><a href="#mechanism">Route first, then model interactions</a></li>
+<li><a href="#training">How the experts learn distinct jobs</a></li>
+<li><a href="#results">Where routing helps most</a></li>
+<li><a href="#contribution">My contribution</a></li>
+<li><a href="#limits">How much an expert weight explains</a></li></ol>
+</nav>
 
-<p class="lead-para">A real disaster photo paired with a misleading caption can create a convincing false story. In multimodal fake news, an image may be authentic and a sentence may sound plausible—the issue lies in their <strong>interaction</strong>. Many detectors concatenate the two modalities too early and lose that signal.</p>
-<p><strong>IMEX-FND</strong>—Interaction-aware Mixture-of-Experts for Fake News Detection—explores how to make those interactions explicit, inspectable, and useful for classification.</p>
-<h2>The problem with coarse fusion</h2>
-<p>Typical multimodal methods concatenate text and image features, or pass them through an attention block, before classification. That can hide two important differences:</p>
-<ul><li><strong>Different cases need different evidence.</strong> Some false stories are exposed by text-image inconsistency; others by a single modality.</li><li><strong>Decisions become opaque.</strong> A classifier may label an item false without indicating whether the text, the image, or their mismatch was decisive.</li></ul>
-<h2>Five experts for five kinds of interaction</h2>
-<p>The framework separates cross-modal evidence into five experts:</p>
-<div class="kv"><div class="kvc"><div class="k">Text-Unique</div><div class="v">Text-only evidence</div></div><div class="kvc"><div class="k">Image-Unique</div><div class="v">Image-only evidence</div></div><div class="kvc"><div class="k">Fusion-Unique</div><div class="v">Fusion-specific evidence</div></div><div class="kvc"><div class="k">Synergy</div><div class="v">Jointly revealing evidence</div></div><div class="kvc"><div class="k">Redundancy</div><div class="v">Mutually reinforcing evidence</div></div></div>
-<p>An <strong>instance-level router</strong> assigns weights to these experts for each item. Those weights act as a direct explanation of which type of evidence influenced a decision.</p>
-<div class="callout"><span class="ci">🧩</span><p><b>Core idea:</b> do not ask one fusion layer to handle every kind of example. Separate the interactions, let the right expert handle the right case, and use routing weights to show why.</p></div>
-<h2>A shared representation space</h2>
-<p>The experts work from a common-dimensional feature space built from a BERT-style text encoder, an MAE-pretrained ViT-B/16 image encoder, and CLIP ViT-B/16 for text-image alignment. Projecting these features into a shared space makes the expert outputs comparable.</p>
-<h2>Training for robust multimodal reasoning</h2>
-<p>Multimodal models often rely too heavily on the strongest modality. To reduce that shortcut, the project uses modality replacement during training, losses that distinguish the uniqueness experts, and auxiliary objectives for the synergy expert.</p>
-<h2>What matters</h2>
-<p>The central point is not simply to increase model capacity. It is to choose a structure that matches the problem: model decisions should reflect whether the evidence is textual, visual, contradictory, complementary, or redundant.</p>
-<div class="callout"><span class="ci">📄</span><p>This article accompanies <i>IMEX-FND: A Traceable Interaction-Aware Mixture-of-Experts Framework for Multimodal Fake News Detection</i>, accepted to <b>WISE 2026</b>. Zijun Wang is the second author. <a href="https://arxiv.org/abs/2609.29610" target="_blank" rel="noopener">Read the paper ↗</a> or <a href="mailto:wangzj@mails.neu.edu.cn">get in touch</a> to discuss the project.</p></div>
+<h2 id="problem">One image, several possible roles</h2>
+<p>Consider a genuine photograph attached to a false claim about a different event. The text can be fluent and the image unaltered. The misleading part is the relationship between them.</p>
+<p>In another post, the image may be decisive because it has been manipulated. In a third, text and image may repeat the same information. These are illustrative cases, but they motivate different ways of using the two modalities.</p>
+<p>IMEX-FND asks how a detector can adapt to these changing relationships while exposing something more useful than a single fusion score. Our design combines instance-level routing with explicit interaction experts.</p>
+<figure class="blog-figure">
+<a href="../assets/img/publications/imex-fnd.png" aria-label="View full-size research figure"><img src="../assets/img/publications/imex-fnd.png" width="1800" height="593" alt="IMEX-FND architecture with pretrained encoders, modality-specific expert routing, five interaction experts, and auxiliary prediction heads." loading="lazy"></a>
+<figcaption>The route-then-decompose pipeline. The three routed streams enter a second stage that models different interaction patterns.</figcaption>
+</figure>
+<h2 id="mechanism">Route first, then model interactions</h2>
+<h3>Routing adapts each representation to the post</h3>
+<p>Frozen encoders extract text, image, and CLIP-grounded cross-modal features. These signals carry different information and are projected into a common downstream feature space.</p>
+<p>The Multi-Modal Expert Gateway (MMEG) uses sample-dependent gates to mix specialist and shared experts. Its outputs are three refined streams: text, image, and fusion.</p>
+<p>The shared experts provide a route for common structure, while specialists retain modality-specific information. A gate can therefore choose a different mixture for a text-led post and an image-led post.</p>
+<h3>Interaction experts assign different jobs to the joint input</h3>
+<p>The Interaction-aware Multi-Modal Expert Fusion module (IMEF) takes the three streams together. Five experts represent text uniqueness, image uniqueness, fusion uniqueness, synergy, and redundancy.</p>
+<div class="blog-equation" aria-label="The interaction feature is the sum of five expert outputs weighted by sample-specific alpha values">z<sub>int</sub> = Σ<sub>j=1…5</sub> α<sub>j</sub>(z) E<sub>j</sub>(z), &nbsp; z = [t; v; m]</div>
+<p>All five experts see the joint input. Their names alone cannot make them specialize. The central training question is how to give those names operational meaning.</p>
+<p class="blog-source">Architecture and notation: <a href="../assets/papers/imex-fnd.pdf#page=5">Sections 3.2–3.5</a>.</p>
 
-            <footer class="blog-article__footer"><a href="../articles.html">← Back to blog</a></footer>
+<h2 id="training">How the experts learn distinct jobs</h2>
+<p>During training, we replace one routed stream with noise while keeping the others fixed. We compare each expert’s response to the original input and to these perturbed versions.</p>
+<div class="blog-table blog-table--text" role="region" aria-label="Intended behaviour under training-time stream replacement, based on Section 3.5." tabindex="0">
+<table><caption>Intended behaviour under training-time stream replacement, based on Section 3.5.</caption><thead><tr><th scope="col">Expert</th><th scope="col">Desired response</th></tr></thead><tbody><tr><th scope="row">Text / image / fusion uniqueness</th><td>Change most when its own stream is replaced; remain closer when another stream is replaced.</td></tr>
+<tr><th scope="row">Synergy</th><td>Change when any required stream is replaced.</td></tr>
+<tr><th scope="row">Redundancy</th><td>Remain stable when one stream is replaced, because overlapping evidence remains.</td></tr></tbody></table>
+</div>
+<p>For a uniqueness expert, a triplet-margin objective keeps the original output closer to irrelevant-stream replacements than to replacement of its own stream. Synergy and redundancy use complementary similarity objectives.</p>
+<p>This is weak supervision for interaction structure. Replacing a feature stream is a controlled operation inside the model; it does not require a human annotation for the interaction type of every post.</p>
+<p>The replacement passes operate on the lightweight interaction module and are disabled at inference. Auxiliary text, image, and fusion heads also supply direct prediction signals during training.</p>
+<p>A hybrid fusion path balances the interaction representation with a conventional fused representation. This preserves another route to useful predictive information when the expert decomposition is imperfect.</p>
+<p class="blog-source">Replacement objectives and hybrid fusion: <a href="../assets/papers/imex-fnd.pdf#page=7">Sections 3.5–3.6</a>.</p>
+
+<h2 id="results">Where routing helps most</h2>
+<p>The overall ablations help distinguish the jobs of the two stages. Removing interaction decomposition causes the largest single-component Macro-F1 drop on each dataset. Removing routing is the next largest drop.</p>
+<div class="blog-table" role="region" aria-label="Macro-F1 across the three benchmarks. Values from Table 2." tabindex="0">
+<table><caption>Macro-F1 across the three benchmarks. Values from Table 2.</caption><thead><tr><th scope="col">Variant</th><th scope="col">Weibo</th><th scope="col">Weibo-21</th><th scope="col">Gossip</th></tr></thead><tbody><tr><th scope="row">Full model</th><td><strong>0.940</strong></td><td><strong>0.952</strong></td><td><strong>0.872</strong></td></tr>
+<tr><th scope="row">Without interaction decomposition</th><td>0.920</td><td>0.930</td><td>0.849</td></tr>
+<tr><th scope="row">Without expert routing</th><td>0.928</td><td>0.942</td><td>0.858</td></tr>
+<tr><th scope="row">Without replacement + interaction losses</th><td>0.932</td><td>0.945</td><td>0.861</td></tr>
+<tr><th scope="row">Without auxiliary heads</th><td>0.936</td><td>0.948</td><td>0.866</td></tr>
+<tr><th scope="row">Simple concatenation</th><td>0.908</td><td>0.921</td><td>0.832</td></tr></tbody></table>
+</div>
+<p>Removing replacement and the interaction losses also reduces performance. This supports giving the experts a specialization signal, although the ablation does not separately identify the effect of replacement and each individual loss.</p>
+<h3>The conflict subset is more revealing than the average</h3>
+<p>Using the auxiliary text-only and image-only heads, we divide posts according to whether their predictions agree. The disagreement subset is a useful place to inspect a model intended to adapt its reliance on each modality.</p>
+<div class="blog-table" role="region" aria-label="Weibo Macro-F1 by unimodal-head agreement. Values from Table 3." tabindex="0">
+<table><caption>Weibo Macro-F1 by unimodal-head agreement. Values from Table 3.</caption><thead><tr><th scope="col">Subset</th><th scope="col">Full model</th><th scope="col">Without routing</th><th scope="col">Absolute gap</th></tr></thead><tbody><tr><th scope="row">Text/image heads agree</th><td>0.962</td><td>0.956</td><td>0.006</td></tr>
+<tr><th scope="row">Text/image heads disagree</th><td>0.862</td><td>0.828</td><td>0.034</td></tr></tbody></table>
+</div>
+<p>On Weibo, the routing gap is 3.4 Macro-F1 points on conflict posts and 0.6 on agreement posts. The corresponding conflict gaps are 2.8 points on Weibo-21 and 3.1 on Gossip.</p>
+<p>This suggests that routing is particularly useful when the unimodal signals compete. The split is defined by model predictions, so it is a diagnostic proxy rather than an independently labelled causal test of modality importance.</p>
+<h3>Accuracy can hide which class remains difficult</h3>
+<p>On Gossip, the full model has 0.908 accuracy and 0.872 Macro-F1. Fake-class F1 is 0.805, while real-class F1 is 0.939. Reporting both classes makes the remaining difficulty visible.</p>
+<p>The fusion-weight sweep also gives a useful caution. Performance generally improves up to a moderate interaction weight, then saturates or decreases. The reported configuration uses λ = 0.3.</p>
+<p>I read that as evidence for balancing the two paths. The results do not support assuming that greater reliance on the interaction experts must always improve a detector.</p>
+<p class="blog-source">Numbers: <a href="../assets/papers/imex-fnd.pdf#page=9">Table 1</a>, <a href="../assets/papers/imex-fnd.pdf#page=10">Table 2</a>, <a href="../assets/papers/imex-fnd.pdf#page=11">Table 3</a>, and <a href="../assets/papers/imex-fnd.pdf#page=12">Figure 4</a>.</p>
+
+<h2 id="contribution">My contribution</h2>
+<p>My work covered multimodal representation construction, instance-level expert routing, interaction-aware training, and the main and ablation experiments on Weibo, Weibo-21, and Gossip.</p>
+<h3>A common interface for heterogeneous features</h3>
+<p>I built the feature pipeline using a BERT-style text encoder, an MAE-pretrained ViT-B/16 image encoder, and CLIP ViT-B/16. The downstream modules needed compatible representations while retaining different encoder signals.</p>
+<p>This required treating token-level features, pooled routing summaries, and cross-modal embeddings as different inputs with different purposes. Reducing everything to one pooled vector would remove information used by the expert gateway.</p>
+<h3>Routing and interaction specialization</h3>
+<p>I worked on the instance-level routing design and the five-expert interaction decomposition. The goal was to adapt the model’s use of evidence for each post and make the resulting interaction weights inspectable.</p>
+<p>I worked on modality replacement and the associated training objectives, including the triplet uniqueness loss, synergy loss, and auxiliary heads. These signals connect an expert’s assigned role to measurable behaviour under perturbation.</p>
+<h3>Controlled comparisons</h3>
+<p>I carried out the main evaluations and component ablations across the three benchmarks. Comparing the complete model with routing, interaction, and training-signal removals helped separate the contributions of the design choices.</p>
+<p>The key question for this evaluation was where a component helped. Aggregate scores describe the overall result; the agreement–conflict split gives a more specific account of when adaptive routing matters.</p>
+
+<h2 id="limits">How much an expert weight explains</h2>
+<p>The interaction weights expose the model’s allocation across experts. For example, Table 4 reports a claim–photo mismatch with a synergy weight of 0.62. Such cases make the learned mechanism easier to inspect.</p>
+<p>A large synergy weight does not, by itself, prove that the real-world misinformation mechanism was synergistic. The weights belong to a learned parameterization, and different experts may still encode overlapping information.</p>
+<p>There is also a gap between replacing an internal stream with noise and removing evidence from a real post. The fusion stream already contains cross-modal information, so keeping it fixed does not erase every trace of a replaced modality.</p>
+<p>For a follow-up study, I would test whether attributions remain stable across random seeds and whether removing the claimed decisive evidence changes predictions as expected. Those tests would assess explanation faithfulness more directly.</p>
+<p>The current experiments support predictive gains and useful internal diagnostics. The next explanation question is whether those diagnostics reliably track the evidence that controls a decision.</p>
+
+<footer class="blog-article__footer">
+<h2>Related notes</h2><ul><li><a href="uhiflow.html">UHIFlow: letting uncertainty choose the depth of user intent</a></li>
+<li><a href="motif.html">MOTIF: using LLM reasoning to change a cold item’s neighbours</a></li></ul>
+<a href="../articles.html">← All research notes</a>
+</footer>
           </div>
         </div>
       </div>
