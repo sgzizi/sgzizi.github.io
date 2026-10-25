@@ -22,3 +22,4 @@ based on the Academic Pages / Minimal Mistakes family of templates.
 The original MIT notice is preserved in `assets/css/LICENSE.academicpages`.
 Font Awesome's embedded icon font is distributed under SIL OFL 1.1; its license
 is preserved in `assets/fonts/LICENSE.fontawesome`.
+<!-- Maintenance annotation; functional content is unchanged. -->
