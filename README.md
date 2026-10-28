@@ -2,14 +2,16 @@
 
 Static GitHub Pages website at <https://wangzijun.top/>.
 
-- `index.html`: biography, news, publications, experience, education, and awards.
+- `index.html`: biography, news, publications, open-source projects, experience, education, and awards.
 - `articles.html` and `posts/`: blog archive and five full research notes, with source links, figures, and experimental comparisons.
-- `styles.css`: small responsive, accessibility, and blog additions.
+- `styles.css`: small responsive, accessibility, project, and blog additions.
 - `main.js`: accessible mobile navigation. Content also works without JavaScript.
 - `assets/css/academic.css`: the same academic theme used by
   <https://yuchenmiao04.github.io/>, under the included MIT license.
 - `assets/img/publications/` and `assets/papers/`: figures and PDFs of the
   co-authored papers, sourced from that homepage.
+- `assets/img/projects/`: project artwork, including the MMFact wordmark from
+  <https://github.com/yuchenmiao04/MMFact>.
 
 To preview locally, run `python3 -m http.server 8000` from this directory.
 GitHub Pages publishes the root of `main`; `CNAME` preserves the existing domain.

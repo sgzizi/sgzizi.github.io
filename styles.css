@@ -1,5 +1,5 @@
 /* The shared academic theme is in assets/css/academic.css.
-   Keep this file limited to navigation, accessibility, and blog additions. */
+   Keep this file limited to navigation, accessibility, and content additions. */
 .author__role { white-space: normal; margin-bottom: 1em; }
 .author__affiliation { white-space: normal !important; }
 .author__name-cn { display: inline-block; white-space: nowrap; }
@@ -37,6 +37,16 @@ h1[id], h2[id] { scroll-margin-top: 4.5rem; }
 .skip-link { position: absolute; top: -5rem; left: 1rem; z-index: 100; padding: .6em 1em; background: #fff; }
 .skip-link:focus { top: .5rem; }
 a:focus-visible, button:focus-visible { outline: 2px solid #224b8d; outline-offset: 4px; }
+
+/* Open-source work follows the shared academic typography. */
+.open-source-project { margin: 1.4em 0 2em; scroll-margin-top: 4.5rem; }
+.open-source-project__header { display: flex; flex-wrap: wrap; align-items: center; gap: .3em 1.5em; margin-bottom: .6em; }
+.page__content .open-source-project h2 { margin: 0; padding: 0; border: 0; }
+.open-source-project h2 a { display: inline-block; }
+.open-source-project h2 img { display: block; width: 210px; max-width: 100%; height: auto; }
+.page__content .open-source-project__meta { margin: 0; color: #666; font-size: .85em; }
+.page__content .open-source-project__subtitle { margin: 0 0 .8em; font-weight: 600; }
+.page__content .open-source-project__links { display: flex; flex-wrap: wrap; gap: .4em 1.25em; margin-bottom: 0; font-size: .9em; }
 
 /* Match the reference site's understated blog typography. */
 .blog-list__entry { padding: 1.1em 0; border-bottom: 1px solid #e8e8e8; }
