@@ -1,8 +1,33 @@
 /* The shared academic theme is in assets/css/academic.css.
    Keep this file limited to navigation, accessibility, and content additions. */
+@font-face {
+  font-family: "Courgette";
+  src: url("assets/fonts/courgette-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
 .author__role { white-space: normal; margin-bottom: 1em; }
 .author__affiliation { white-space: normal !important; }
+.author__content { min-width: 0; container-type: inline-size; }
+.sidebar .author__name {
+  margin-bottom: 0;
+  font-size: 1.1em;
+  font-size: clamp(.9rem, 9.5cqi, 1.4rem);
+  line-height: 1.35;
+  white-space: nowrap;
+}
 .author__name-cn { display: inline-block; white-space: nowrap; }
+.sidebar .author__signature {
+  margin: .35em 0 .75em;
+  color: #5c6266;
+  font-family: "Courgette", Baskerville, Georgia, serif;
+  font-size: clamp(15px, 9.5cqi, 19px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: nowrap;
+}
 /* Match the supplied framing reference while keeping the original white background. */
 .author__avatar--formal {
   display: block;
@@ -97,6 +122,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid #224b8d; outline-offs
 .kvc { display: flex; gap: 1em; padding: .5em 0; border-bottom: 1px solid #eee; }
 .kvc .k { flex: 0 0 8em; font-weight: bold; }
 
+@media (min-width: 57.8125em) {
+  .author__content { width: max(100%, 11rem); }
+}
 @media (max-width: 64em) {
   .greedy-nav .visible-links { display: flex; flex-wrap: wrap; }
   .masthead__menu .masthead__menu-home-item { display: block !important; flex-basis: 100%; padding-right: 3em; }
@@ -110,7 +138,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid #224b8d; outline-offs
 @media (max-width: 57.8124em) {
   .profile_box { flex-wrap: wrap; gap: .5em 0; }
   .author__content { flex: 1; }
-  .author__urls-wrapper { margin-left: 0; }
+  .author__urls-wrapper { display: none; }
   .author__urls_sm { display: flex; padding: .25em 0 .25em .25em; }
   .author__urls_sm a { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; min-height: 36px; }
 }
