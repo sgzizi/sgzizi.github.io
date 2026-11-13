@@ -24,7 +24,4 @@ based on the Academic Pages / Minimal Mistakes family of templates.
 The original MIT notice is preserved in `assets/css/LICENSE.academicpages`.
 Font Awesome's embedded icon font is distributed under SIL OFL 1.1; its license
 is preserved in `assets/fonts/LICENSE.fontawesome`.
-The signature uses the locally hosted Courgette font from
-[Google Fonts](https://github.com/google/fonts/tree/main/ofl/courgette), under
-SIL OFL 1.1. Its license is preserved in `assets/fonts/LICENSE.courgette`.
 <!-- Maintenance annotation; functional content is unchanged. -->

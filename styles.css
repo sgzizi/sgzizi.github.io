@@ -1,12 +1,5 @@
 /* The shared academic theme is in assets/css/academic.css.
    Keep this file limited to navigation, accessibility, and content additions. */
-@font-face {
-  font-family: "Courgette";
-  src: url("assets/fonts/courgette-regular.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
 .author__role { white-space: normal; margin-bottom: 1em; }
 .author__affiliation { white-space: normal !important; }
 .author__content { min-width: 0; container-type: inline-size; }
@@ -19,13 +12,14 @@
 }
 .author__name-cn { display: inline-block; white-space: nowrap; }
 .sidebar .author__signature {
-  margin: .35em 0 .75em;
-  color: #5c6266;
-  font-family: "Courgette", Baskerville, Georgia, serif;
-  font-size: clamp(15px, 9.5cqi, 19px);
-  font-style: normal;
+  margin: 8px 0 0;
+  color: #62686d;
+  font-family: Baskerville, Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.6;
+  letter-spacing: .02em;
   white-space: nowrap;
 }
 /* Match the supplied framing reference while keeping the original white background. */
@@ -124,6 +118,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid #224b8d; outline-offs
 
 @media (min-width: 57.8125em) {
   .author__content { width: max(100%, 11rem); }
+}
+@media (min-width: 1200px) {
+  .sidebar .author__signature { margin-top: -2px; margin-bottom: 14px; }
 }
 @media (max-width: 64em) {
   .greedy-nav .visible-links { display: flex; flex-wrap: wrap; }
